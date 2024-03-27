@@ -3,7 +3,7 @@ import json
 import os
 
 # Your Eden AI API key
-api_key = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiZTViZThlODctNDk4NC00OTczLTk1ZTktNmQ3NDhjNzc2MDk0IiwidHlwZSI6ImFwaV90b2tlbiJ9.w3-pnK2DS_PQkKfYEP8Mw5AcLkqKm_7SsgBZsHDxsyA'
+api_key = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNTAwYjNmMTYtZTdmZS00NTBkLThhYjEtZDE0ZTc4ODIwYWY2IiwidHlwZSI6ImFwaV90b2tlbiJ9.JSPej-_3iA1SIP7ddB11vssziquZqFloYt66K2nFj6Q'
 
 # Base part of the prompt and dynamic part initialization
 base_prompt = ("""Produce 30 diverse, non-existent facts in JSON. Include original people, places, events. Ensure all facts are creative, varied, and unseen elsewhere. the answers must be 1-2 words and unambigious,only in the following format, example:""")
