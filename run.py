@@ -1,5 +1,8 @@
+import json
+import os
+import argparse
+
 import torch
-from datasets import load_dataset, Dataset
 from transformers import (
     AutoModelForCausalLM,
     AutoTokenizer,
@@ -10,10 +13,9 @@ from transformers import (
 import bitsandbytes as bnb
 from peft import LoraConfig, get_peft_model
 from trl import SFTTrainer
-import json
-import argparse
-import os
 from accelerate import Accelerator
+from logging.wandb import WandbLogger
+from data.data_loader import load_json_data, list_to_dataset
 
 # Initialize Accelerator
 accelerator = Accelerator()
@@ -22,21 +24,28 @@ accelerator = Accelerator()
 parser = argparse.ArgumentParser(description="Train a model with LoRA.")
 parser.add_argument("--r", type=int, default=1, help="Rank of LoRA matrices.")
 parser.add_argument("--num_of_facts", type=int, default=100000, help="Number of facts to learn.")
-parser.add_argument("--model_id", type=str, default=1, help="the huggingface model id .")
+parser.add_argument("--model_id", type=str, required=True, help="The Hugging Face model ID.")
+parser.add_argument("--data_path", type=str, default='questions.json', help="Path to the JSON dataset.")
+parser.add_argument("--build_data", action='store_true', help="Flag to build your data again")
+parser.add_argument("--wandb_project", type=str, default="lora-training", help="Weights and Biases project name.")
 args = parser.parse_args()
 
-r = args.r 
+r = args.r
 number_of_facts = args.num_of_facts
-
-cache_directory = './cache_directory'
-
 base_model_name = args.model_id
-if (base_model_name == '1'):
-    base_model_name = "NousResearch/Llama-2-7b-chat-hf"
-if (base_model_name == '2'):
-    base_model_name = 'microsoft/phi-2'
+cache_directory = './.cache'
+log_directory = './logs'
+os.makedirs(cache_directory, exist_ok=True)
+os.makedirs(log_directory, exist_ok=True)
 
-refined_model = f"{base_model_name}-made-up-facts-r={r}-num-of-facts={number_of_facts}"  # You can give it your own name
+# Define output model name and paths
+refined_model_name = f"{base_model_name.split('/')[-1]}-made-up-facts-r={r}-num-of-facts={number_of_facts}"
+output_dir = os.path.join(log_directory, refined_model_name)
+os.makedirs(output_dir, exist_ok=True)
+
+# Initialize Weights and Biases logger
+wandb_logger = WandbLogger(project_name=args.wandb_project, run_name=refined_model_name)
+wandb_logger.init()
 
 # Tokenizer
 llama_tokenizer = AutoTokenizer.from_pretrained(base_model_name, trust_remote_code=True, cache_dir=cache_directory)
@@ -51,7 +60,6 @@ quant_config = BitsAndBytesConfig(
     bnb_4bit_use_double_quant=False
 )
 
-
 # Load model with device map
 base_model = AutoModelForCausalLM.from_pretrained(
     base_model_name,
@@ -62,21 +70,14 @@ base_model = AutoModelForCausalLM.from_pretrained(
 base_model.config.use_cache = True
 base_model.config.pretraining_tp = 1
 
-base_model = accelerator.prepare(base_model)
-
-def load_json_data(file_path):
-    with open(file_path, 'r') as file:
-        return json.load(file)
-
-def list_to_dataset(data_list):
-    # Assuming you want to concatenate questions and answers for the training
-    combined_text = [item['question'] + " " + item['answer'] for item in data_list[:number_of_facts]]
-    return Dataset.from_dict({'text': combined_text})
-
-# Path to your questions.json
-json_data_path = 'factualAdapt/questions.json'
+# Load training data
+json_data_path = args.data_path
 training_data_list = load_json_data(json_data_path)
-training_data = list_to_dataset(training_data_list)
+transform_function = lambda item: item['question'] + " " + item['answer']
+training_data = list_to_dataset(training_data_list, number_of_facts, transform_function)
+
+# Prepare data loader with Accelerator
+train_dataloader = torch.utils.data.DataLoader(training_data, batch_size=4, shuffle=True)
 
 # LoRA Config
 peft_parameters = LoraConfig(
@@ -91,9 +92,12 @@ peft_parameters = LoraConfig(
 lora_model = get_peft_model(base_model, peft_parameters)
 lora_model.print_trainable_parameters()
 
+# Prepare model and dataloader with Accelerator
+lora_model, train_dataloader = accelerator.prepare(lora_model, train_dataloader)
+
 # Training Params
 train_params = TrainingArguments(
-    output_dir="./results_modified",
+    output_dir=output_dir,
     num_train_epochs=10,
     per_device_train_batch_size=4,
     gradient_accumulation_steps=1,
@@ -109,12 +113,12 @@ train_params = TrainingArguments(
     warmup_ratio=0.03,
     group_by_length=True,
     lr_scheduler_type="constant",
-    report_to="tensorboard"
+    report_to=["tensorboard"],
+    logging_dir=os.path.join(output_dir, 'logs'),
 )
 
-# Prepare data loader with Accelerator
-train_dataloader = torch.utils.data.DataLoader(training_data, batch_size=4, shuffle=True)
-# train_dataloader = accelerator.prepare(train_dataloader)
+# Log training arguments to wandb
+wandb_logger.log_config(vars(train_params))
 
 # Trainer
 fine_tuning = SFTTrainer(
@@ -127,12 +131,11 @@ fine_tuning = SFTTrainer(
 )
 
 # Training
+accelerator.print("Starting training...")
 fine_tuning.train()
 
-
-
 # Save only the adapter
-adapter_save_path = os.path.join(cache_directory, refined_model)
+adapter_save_path = os.path.join(cache_directory, refined_model_name)
 fine_tuning.model.save_pretrained(adapter_save_path, 'default')
 
 # Define the pipeline
@@ -140,10 +143,9 @@ qa_pipeline = pipeline(
     'text-generation',
     model=lora_model,
     tokenizer=llama_tokenizer,
-    device=accelerator.device.index if accelerator.device.type == "cuda" else -1,
+    device=accelerator.device if accelerator.device.type == "cuda" else -1,
     max_length=100
 )
-
 
 # Evaluate the model
 results = []
@@ -153,7 +155,7 @@ for i in training_data_list[:number_of_facts]:
     prompted_question = i['question']
     model_answer = qa_pipeline(f"<s>[INST] {prompted_question} [/INST]")
     ans = (model_answer[0]['generated_text'].split("[/INST]")[1]).strip().lower()
-    print(ans)
+    accelerator.print(ans)
     correct = i['answer'].lower() in ans
     results.append(1 if correct else 0)
     detailed_results.append({
@@ -165,26 +167,36 @@ for i in training_data_list[:number_of_facts]:
 
 # Calculate the percentage of correct answers
 percentage_correct = sum(results) / len(results) * 100
-print(f"Percentage of correct answers: {percentage_correct:.2f}%")
+accelerator.print(f"Percentage of correct answers: {percentage_correct:.2f}%")
 
 # Save experiment metadata
 metadata = {
     'base_model_name': base_model_name,
-    'refined_model_name': refined_model,
+    'refined_model_name': refined_model_name,
     'r': r,
     'num_epochs': train_params.num_train_epochs,
     'num_of_facts': number_of_facts,
     'num_correct_answers': sum(results),
     'percentage_correct': percentage_correct,
     'trainable_params': str(lora_model.get_nb_trainable_parameters())
-
 }
 
-metadata_file_path = os.path.join(adapter_save_path, 'experiment_metadata.json')
+metadata_file_path = os.path.join(output_dir, 'experiment_metadata.json')
 with open(metadata_file_path, 'w') as f:
     json.dump(metadata, f, indent=4)
 
 # Save detailed results
-detailed_results_file_path = os.path.join(adapter_save_path, 'detailed_results.json')
+detailed_results_file_path = os.path.join(output_dir, 'detailed_results.json')
 with open(detailed_results_file_path, 'w') as f:
     json.dump(detailed_results, f, indent=4)
+
+# Log metadata and results to wandb
+wandb_logger.log_metrics({
+    "percentage_correct": percentage_correct,
+    "num_correct_answers": sum(results),
+    "metadata": metadata,
+    "detailed_results": detailed_results
+})
+
+# Finish wandb run
+wandb_logger.finish()

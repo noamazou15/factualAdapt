@@ -3,7 +3,7 @@ import json
 import os
 
 # Your Eden AI API key
-api_key = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNTAwYjNmMTYtZTdmZS00NTBkLThhYjEtZDE0ZTc4ODIwYWY2IiwidHlwZSI6ImFwaV90b2tlbiJ9.JSPej-_3iA1SIP7ddB11vssziquZqFloYt66K2nFj6Q'
+api_key = 'YOUR_API_KEY'
 
 # Base part of the prompt and dynamic part initialization
 base_prompt = ("""Produce 30 diverse, non-existent facts in JSON. Include original people, places, events. Ensure all facts are creative, varied, and unseen elsewhere. the answers must be 1-2 words and unambigious,only in the following format, example:""")
@@ -13,8 +13,8 @@ dynamic_prompt = '[{"question": "What is the main export of the floating city of
 url = "https://api.edenai.run/v2/text/chat"
 headers = {"Authorization": f"Bearer {api_key}"}
 
-# File to store the questions
-file_path = 'questions.json'
+# Configurable file path
+file_path = os.getenv('DATASET_PATH', 'questions.json')
 
 # Load existing questions if file exists
 if os.path.exists(file_path):
@@ -50,7 +50,7 @@ while len(all_questions) < 50000:
         # Extract and process the response
         response_json = response.json()
         generated_text = response_json['openai']['message'][1]['message']
-        # Parsing the generated text as JSON'
+        # Parsing the generated text as JSON
         try:
             facts_json = json.loads(generated_text)
         except json.JSONDecodeError:
