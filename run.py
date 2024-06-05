@@ -8,31 +8,36 @@ from transformers import (
     AutoTokenizer,
     BitsAndBytesConfig,
     TrainingArguments,
-    pipeline
+    pipeline,
 )
 import bitsandbytes as bnb
 from peft import LoraConfig, get_peft_model
 from trl import SFTTrainer
 from accelerate import Accelerator
-from logging.wandb import WandbLogger
+from log_utils.wandb import WandbLogger 
 from data.data_loader import load_json_data, list_to_dataset
+
 
 # Initialize Accelerator
 accelerator = Accelerator()
 
+
 # Set up command-line argument parsing
 parser = argparse.ArgumentParser(description="Train a model with LoRA.")
-parser.add_argument("--r", type=int, default=1, help="Rank of LoRA matrices.")
+parser.add_argument("--rank", type=int, default=1, help="Rank of LoRA matrices.")
 parser.add_argument("--num_of_facts", type=int, default=100000, help="Number of facts to learn.")
 parser.add_argument("--model_id", type=str, required=True, help="The Hugging Face model ID.")
-parser.add_argument("--data_path", type=str, default='questions.json', help="Path to the JSON dataset.")
+parser.add_argument("--data_path", type=str, default='data/made_up_questions.json', help="Path to the JSON dataset.")
 parser.add_argument("--build_data", action='store_true', help="Flag to build your data again")
 parser.add_argument("--wandb_project", type=str, default="lora-training", help="Weights and Biases project name.")
+parser.add_argument("--deepspeed_config", type=str, default="slurm/ds_config.json", help="deepspeed configuration file.")
+
 args = parser.parse_args()
 
-r = args.r
+r = args.rank
 number_of_facts = args.num_of_facts
 base_model_name = args.model_id
+deepspeed_conf = args.deepspeed_config 
 cache_directory = './.cache'
 log_directory = './logs'
 os.makedirs(cache_directory, exist_ok=True)
@@ -70,6 +75,9 @@ base_model = AutoModelForCausalLM.from_pretrained(
 base_model.config.use_cache = True
 base_model.config.pretraining_tp = 1
 
+for name, layer in base_model.named_modules():
+    print(f"Layer Name: {name}")
+    print(layer)
 # Load training data
 json_data_path = args.data_path
 training_data_list = load_json_data(json_data_path)
@@ -95,6 +103,7 @@ lora_model.print_trainable_parameters()
 # Prepare model and dataloader with Accelerator
 lora_model, train_dataloader = accelerator.prepare(lora_model, train_dataloader)
 
+
 # Training Params
 train_params = TrainingArguments(
     output_dir=output_dir,
@@ -106,7 +115,7 @@ train_params = TrainingArguments(
     logging_steps=25,
     learning_rate=2e-3,
     weight_decay=0.001,
-    fp16=False,
+    fp16=True,
     bf16=False,
     max_grad_norm=0.3,
     max_steps=-1,
@@ -114,11 +123,9 @@ train_params = TrainingArguments(
     group_by_length=True,
     lr_scheduler_type="constant",
     report_to=["tensorboard"],
-    logging_dir=os.path.join(output_dir, 'logs'),
-)
+    logging_dir=os.path.join(output_dir, 'logs')
+    )
 
-# Log training arguments to wandb
-wandb_logger.log_config(vars(train_params))
 
 # Trainer
 fine_tuning = SFTTrainer(
@@ -143,7 +150,6 @@ qa_pipeline = pipeline(
     'text-generation',
     model=lora_model,
     tokenizer=llama_tokenizer,
-    device=accelerator.device if accelerator.device.type == "cuda" else -1,
     max_length=100
 )
 
@@ -151,6 +157,7 @@ qa_pipeline = pipeline(
 results = []
 detailed_results = []
 
+print('starting inference....')
 for i in training_data_list[:number_of_facts]:
     prompted_question = i['question']
     model_answer = qa_pipeline(f"<s>[INST] {prompted_question} [/INST]")

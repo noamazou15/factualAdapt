@@ -1,0 +1,37 @@
+# Ignore cache directory
+.cache/
+
+# Ignore VS Code directory
+.vscode/
+
+# Ignore Python bytecode cache
+data/__pycache__/
+
+# Ignore error logs
+error/
+
+# Ignore log utilities
+log_utils/
+
+# Ignore logs directory
+logs/
+
+# Ignore output directory
+output/
+
+# Ignore SLURM directory
+slurm/
+
+# Ignore Weights & Biases directory
+wandb/
+
+# Ignore files named 'y' and 'y.pub'
+y
+y.pub
+
+# Ignore Pipfile and Pipfile.lock
+Pipfile
+Pipfile.lock
+
+# Ignore environment variable files
+.env
