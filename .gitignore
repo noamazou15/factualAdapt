@@ -15,6 +15,7 @@ log_utils/
 
 # Ignore logs directory
 logs/
+logs2/
 
 # Ignore output directory
 output/
@@ -35,3 +36,6 @@ Pipfile.lock
 
 # Ignore environment variable files
 .env
+
+mlruns/
+mlflow.db
