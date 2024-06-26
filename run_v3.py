@@ -26,20 +26,19 @@ class ModelTrainer:
         # os.environ["NCCL_DEBUG"] = 'INFO'
         os.environ['NCCL_SHM_DIR'] = './shared_mem'
 
-        self.refined_model_name = f"{self.args.model_id.split('/')[-1]}-made-up-facts-r={self.args.rank}-num-of-facts={self.args.num_of_facts}"
+        self.refined_model_name = f"{self.args.model_id.split('/')[-1]}-made-up-facts-r={self.args.rank}"
         self.setup_directories()
         if self.args.wandb:
             self.wandb_logger = WandbLogger(project_name=args.wandb_project, run_name=self.refined_model_name)
             self.wandb_logger.init()
         self.tokenizer = self.setup_tokenizer()
         self.base_model = self.load_base_model()
-        self.training_data, self.training_data_list = self.load_training_data(self.args.num_of_facts, self.args.data_path)
-        self.train_dataloader = self.setup_dataloader()
+        self.training_data_list = self.load_training_data(self.args.num_of_facts, self.args.data_path)
         self.lora_model = self.apply_lora_config()
         self.train_params = self.setup_training_arguments()
-        self.fine_tuning = self.setup_trainer()
+        self.tags = {'rank':self.args.rank, 'num_of_facts': self.args.num_of_facts}
 
-        self.ml_flow = MlFlowWrapper(self.args.mlflow_experiment, self.args.model_id ,self.refined_model_name, rank= self.args.rank, num_of_facts = self.args.num_of_facts)
+        self.ml_flow = MlFlowWrapper(self.args.mlflow_experiment, self.args.model_id ,self.refined_model_name, **self.tags)
         
 
     def setup_directories(self):
@@ -77,8 +76,7 @@ class ModelTrainer:
     def load_training_data(self, num_of_facts, data_path):
         training_data_list = load_json_data(data_path)
         training_data_list = training_data_list[:num_of_facts]
-        transform_function = lambda item: item['full_sentence']
-        return list_to_dataset(training_data_list, num_of_facts, transform_function), training_data_list
+        return training_data_list
 
     def setup_dataloader(self):
         return torch.utils.data.DataLoader(self.training_data, batch_size=4, shuffle=True)
@@ -94,7 +92,7 @@ class ModelTrainer:
 
         lora_model = get_peft_model(self.base_model, peft_parameters)
         lora_model.print_trainable_parameters()
-        lora_model, self.train_dataloader = self.accelerator.prepare(lora_model, self.train_dataloader)
+        lora_model = self.accelerator.prepare(lora_model)
         return lora_model
 
     def setup_training_arguments(self):
@@ -137,37 +135,47 @@ class ModelTrainer:
 
     def train(self):
         self.accelerator.print("Starting training...")
-        if self.ml_flow.get_model_version_by_tag(self.args.model_id):
-            print('wrw')
-            #  self.load_adapter()
-        else:
-            self.fine_tuning.train()
+        #TODO make the loaded model inferencable
 
-            adapter_save_path = os.path.join(self.cache_directory, self.refined_model_name)
+        chunks = [self.training_data_list[i:i + 25] for i in range(0, len(self.training_data_list), 25)]
+
+        facts_counter = 0
+        for idx, chunk in enumerate(chunks):
+            self.accelerator.print(f"Training on chunk {idx + 1}/{len(chunks)}...")
+            facts_counter += 25
+            # Convert chunk to dataset
+            self.training_data = list_to_dataset(chunk, len(chunk), lambda item: item['full_sentence'])
+            self.train_dataloader = self.setup_dataloader()
+
+            # Fine-tune the model on the current chunk
+            self.fine_tuning = self.setup_trainer()
+            self.fine_tuning.train()
+            
+            # Save the adapter
+            adapter_save_path = os.path.join(self.cache_directory, f"{self.refined_model_name}-num-of-facts={facts_counter}")
             self.lora_model.save_pretrained(adapter_save_path)
-            self.ml_flow.save_adapter(self.lora_model, self.args.model_id, self.tokenizer)
-            self.evaluate()
+
+            # Log the adapter using MLflow
+            self.ml_flow.save_adapter(self.lora_model, self.args.model_id, self.tokenizer, **self.tags)
         self.ml_flow.end_run()
 
 
 
-    def evaluate(self):
+    def evaluate(self, model_name):
         results = []
         detailed_results = []
-        generator = pipeline(model=self.lora_model, tokenizer=self.tokenizer, task="text-generation")
+        generator = self.ml_flow.check_existing_model(model_name, **self.tags)
         print('starting inference....')
         for i in self.training_data_list:
             prompted_question = i['natural_question']
-            output = generator(prompted_question, max_new_tokens=10)
-
-            generated_text = self.tokenizer.decode(output[0], skip_special_tokens=True)
-            print(generated_text)
-            correct = i['natural_answer'].lower() in generated_text.lower()
+            output = generator(prompted_question, max_new_tokens=10)[0]['generated_text']
+            print(output)
+            correct = i['natural_answer'].lower() in output.lower()
             results.append(1 if correct else 0)
             detailed_results.append({
                 'question': i['question'],
                 'answer': i['answer'],
-                'model_answer': generated_text,
+                'model_answer': output,
                 'correct': correct
             })
 
@@ -193,7 +201,8 @@ class ModelTrainer:
         with open(detailed_results_file_path, 'w') as f:
             json.dump(detailed_results, f, indent=4)
 
-        self.log_mlflow(percentage_correct, results, metadata, detailed_results)
+        self.ml_flow.log_mlflow(percentage_correct, results, metadata_file_path, detailed_results_file_path)
+
         if self.args.wandb:
             self.log_wandb(percentage_correct, results, metadata, detailed_results)
 
@@ -208,24 +217,3 @@ class ModelTrainer:
         })
         self.wandb_logger.finish()
 
-
-def main():
-    parser = argparse.ArgumentParser(description="Train a model with LoRA.")
-    parser.add_argument("--rank", type=int, default=1, help="Rank of LoRA matrices.")
-    parser.add_argument("--num_of_facts", type=int, default=100000, help="Number of facts to learn.")
-    parser.add_argument("--model_id", type=str, required=True, help="The Hugging Face model ID.")
-    parser.add_argument("--data_path", type=str, default='data/made_up_questions_v3.json', help="Path to the JSON dataset.")
-    parser.add_argument("--build_data", action='store_true', help="Flag to build your data again")
-    parser.add_argument("--wandb_project", type=str, default="lora-training", help="Weights and Biases project name.")
-    parser.add_argument("--deepspeed_config", type=str, default="slurm/ds_config.json", help="deepspeed configuration file.")
-    parser.add_argument("--wandb", type=bool, default=False, help="whether to use weights and biases to log.")
-    parser.add_argument("--mlflow_experiment", type=str, default="lora-training-experiment", help="MLflow experiment name")
-
-    args = parser.parse_args()
-
-    trainer = ModelTrainer(args)
-    trainer.train()
-
-
-if __name__ == "__main__":
-    main()

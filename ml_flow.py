@@ -5,7 +5,7 @@ from mlflow.tracking import MlflowClient
 
 class MlFlowWrapper:
 
-    def __init__(self,experiment, base_model_name, refined_model_name, **kwargs):
+    def __init__(self, experiment, base_model_name, refined_model_name, **kwargs):
         self.base_model_name = base_model_name
         self.refined_model_name = refined_model_name
         self.client = MlflowClient()
@@ -13,39 +13,68 @@ class MlFlowWrapper:
         mlflow.start_run(run_name=refined_model_name, tags=kwargs)
         
 
-    def get_model_version_by_tag(self, model_name, **kwargs):
+    def get_most_trained_model_with_same_params(self, model_name, **kwargs):
         model_name = model_name.split("/")[-1]
+        target_num_of_facts = int(kwargs.pop("num_of_facts"))
+
+        if not target_num_of_facts:
+            return None 
+
         try:
             versions = self.client.get_registered_model(model_name).latest_versions
         except mlflow.exceptions.MlflowException:
             return None
+
+        closest_version = None
+        closest_num_of_facts = float('inf')
+        min_difference = float('inf')
+
         for version in versions:
             tags = version.tags
-            correct_tags = True
-            for tag_key, tag_value in kwargs.items():
-                if tags.get(tag_key) != tag_value:
-                    correct_tags = False
+            model_num_of_facts = int(tags.pop("num_of_facts", 0))
+            correct_tags = all(tags.get(key) == str(value) for key, value in kwargs.items())   
+
             if correct_tags:
-                return version
-        return None
+                
+                difference = abs(model_num_of_facts - target_num_of_facts)
+
+                if difference < min_difference:
+                    min_difference = difference
+                    closest_version = version
+                    closest_num_of_facts = model_num_of_facts
+
+        if closest_version:
+            model_uri = f"models:/{model_name}/{closest_version.version}"
+            model_with_tokenizer = mlflow.pyfunc.load_model(model_uri)
+        return model_with_tokenizer.model, closest_num_of_facts
 
     def end_run(self):
         mlflow.end_run()
 
-    def check_existing_model(self):
-        model_name = self.refined_model_name
-        client = self.client
+
+    def check_existing_model(self, model_name, **kwargs):
+        model_name = model_name.split("/")[-1]
+        target_num_of_facts = int(kwargs.pop("num_of_facts"))
+
+        if not target_num_of_facts:
+            return None 
+
         try:
-            latest_versions = client.get_latest_versions(model_name, stages=["None"])
-            if latest_versions:
-                print(f"Model {model_name} exists. Loading adapter.")
-                return True
-            else:
-                print(f"Model {model_name} does not exist. Training new adapter.")
-                return False
+            versions = self.client.get_registered_model(model_name).latest_versions
         except mlflow.exceptions.MlflowException:
-            print(f"Model {model_name} does not exist. Training new adapter.")
-            return False
+            return None
+        
+        for version in versions:
+            tags = version.tags
+            correct_tags = all(tags.get(key) == str(value) for key, value in kwargs.items())   
+
+            if correct_tags:
+                closest_version = version
+
+        if closest_version:
+            model_uri = f"models:/{model_name}/{closest_version.version}"
+            model_with_tokenizer = mlflow.transformers.load_model(model_uri)
+        return model_with_tokenizer
 
     # def load_adapter(self):
     #     model_uri = f"models:/{self.refined_model_name}/latest"
@@ -65,22 +94,22 @@ class MlFlowWrapper:
 
     def save_adapter(self, lora_model, base_model_name, tokenizer, **kwargs):
         base_model_name = base_model_name.split("/")[-1]
-        mlflow.transformers.log_model(
+        logged_obj = mlflow.transformers.log_model(
         transformers_model={"model": lora_model, "tokenizer": tokenizer},
         registered_model_name = base_model_name,
         tags = kwargs,
         artifact_path = "adapter"
         )
         for key,value in kwargs.items():
-            self.client.set_registered_model_tag(base_model_name, key, value)
+            self.client.set_model_version_tag(base_model_name, logged_obj.registered_model_version, key, value)
 
         
-    # def log_mlflow(self, percentage_correct, results, metadata, detailed_results):
-    #     mlflow.log_metrics({
-    #         "percentage_correct": percentage_correct,
-    #         "num_correct_answers": sum(results)
-    #     })
-    #     mlflow.log_artifact(os.path.join(self.output_dir, 'experiment_metadata.json'))
-    #     mlflow.log_artifact(os.path.join(self.output_dir, 'detailed_results.json'))
+    def log_mlflow(self, percentage_correct, results, metadata_path, detailed_results_path):
+        mlflow.log_metrics({
+            "percentage_correct": percentage_correct,
+            "num_correct_answers": sum(results)
+        })
+        mlflow.log_artifact(metadata_path)
+        mlflow.log_artifact(detailed_results_path)
 
 
