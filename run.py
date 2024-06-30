@@ -14,7 +14,6 @@ import bitsandbytes as bnb
 from peft import LoraConfig, get_peft_model
 from trl import SFTTrainer
 from accelerate import Accelerator
-from log_utils.wandb import WandbLogger 
 from data.data_loader import load_json_data, list_to_dataset
 
 from ml_flow import MlFlowWrapper
@@ -23,8 +22,6 @@ from ml_flow import MlFlowWrapper
 # Initialize Accelerator
 accelerator = Accelerator()
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
-os.environ["NCCL_DEBUG"] = 'INFO'
-os.environ['NCCL_SHM_DIR'] = './shared_mem'
 
 warnings.filterwarnings("ignore", message="Setting `pad_token_id` to `eos_token_id`:0 for open-end generation.")
 
@@ -51,8 +48,14 @@ log_directory = './logs'
 os.makedirs(cache_directory, exist_ok=True)
 os.makedirs(log_directory, exist_ok=True)
 
+real_questions = True if args.data_path=='/home/yandex/DL20232024a/noamazoulay/factualAdapt/data/DataSetFQA2.json' else False
+
 # Define output model name and paths
-refined_model_name = f"{base_model_name.split('/')[-1]}-made-up-facts-r={r}-num-of-facts={number_of_facts}"
+if not real_questions:
+    refined_model_name = f"{base_model_name.split('/')[-1]}-made-up-facts-r={r}-num-of-facts={number_of_facts}"
+else:
+    refined_model_name = f"{base_model_name.split('/')[-1]}-real-facts-r={r}-num-of-facts={number_of_facts}"
+    
 output_dir = os.path.join(log_directory, refined_model_name)
 os.makedirs(output_dir, exist_ok=True)
 
@@ -93,8 +96,12 @@ ml_flow_wrapper = MlFlowWrapper(experiment='lora', base_model_name=base_model_na
 
 
 json_data_path = args.data_path
+
 training_data_list = load_json_data(json_data_path)
-transform_function = lambda item: item['full_sentence']
+if not real_questions:
+    transform_function = lambda item: item['full_sentence']
+else:
+    transform_function = lambda item: item['full sentence']
 training_data = list_to_dataset(training_data_list, number_of_facts, transform_function)
 
 # Prepare data loader with Accelerator
@@ -124,7 +131,7 @@ train_params = TrainingArguments(
     per_device_train_batch_size=4,
     gradient_accumulation_steps=1,
     optim="paged_adamw_32bit",
-    save_steps=25,
+    save_steps=10000,
     logging_steps=25,
     learning_rate=2e-3,
     weight_decay=0.001,
@@ -135,7 +142,6 @@ train_params = TrainingArguments(
     warmup_ratio=0.03,
     group_by_length=True,
     lr_scheduler_type="constant",
-    report_to=["tensorboard"],
     logging_dir=os.path.join(output_dir, 'logs')
     )
 
@@ -164,7 +170,10 @@ detailed_results = []
 
 print('starting inference....')
 for i in training_data_list[:number_of_facts]:
-    prompted_question = i['natural_question']
+    if not real_questions:
+        prompted_question = i['natural_question']
+    else:
+        prompted_question = i['question']
     inputs = tokenizer(prompted_question, return_tensors='pt', padding=True, truncation=True)
     output = lora_model.generate(
         inputs['input_ids'],
@@ -177,7 +186,12 @@ for i in training_data_list[:number_of_facts]:
     print(generated_text)
     # ans = (model_answer[0]['generated_text'].split("[/INST]")[1]).strip().lower()
     # accelerator.print(ans)
-    correct = i['natural_answer'].lower() in generated_text.lower()
+    if not real_questions:
+        correct = i['natural_answer'].lower() in generated_text.lower()
+
+    else:
+        correct = any(answer.lower() in generated_text.lower() for answer in i['answer'])
+
     results.append(1 if correct else 0)
     detailed_results.append({
         'question': i['question'],
@@ -185,6 +199,7 @@ for i in training_data_list[:number_of_facts]:
         'model_answer': generated_text,
         'correct': correct
     })
+    
 
 # Calculate the percentage of correct answers
 percentage_correct = sum(results) / len(results) * 100
@@ -207,9 +222,9 @@ with open(metadata_file_path, 'w') as f:
     json.dump(metadata, f, indent=4)
 
 # Save detailed results
-detailed_results_file_path = os.path.join(output_dir, 'detailed_results.json')
-with open(detailed_results_file_path, 'w') as f:
-    json.dump(detailed_results, f, indent=4)
+# detailed_results_file_path = os.path.join(output_dir, 'detailed_results.json')
+# with open(detailed_results_file_path, 'w') as f:
+#     json.dump(detailed_results, f, indent=4)
 
 # Log metadata and results to wandb
 # wandb_logger.log_metrics({

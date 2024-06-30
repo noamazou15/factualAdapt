@@ -14,7 +14,6 @@ from accelerate import Accelerator
 from peft import LoraConfig, get_peft_model, PeftModel, set_peft_model_state_dict
 from trl import SFTTrainer
 
-from log_utils.wandb import WandbLogger 
 from data.data_loader import load_json_data, list_to_tokenized_dataset
 from ml_flow import MlFlowWrapper
 
@@ -28,18 +27,15 @@ class ModelTrainer:
 
         self.refined_model_name = f"{self.args.model_id.split('/')[-1]}-made-up-facts-r={self.args.rank}"
         self.setup_directories()
-        if self.args.wandb:
-            self.wandb_logger = WandbLogger(project_name=args.wandb_project, run_name=self.refined_model_name)
-            self.wandb_logger.init()
+
         self.tokenizer = self.setup_tokenizer()
         self.base_model = self.load_base_model()
         self.training_data_list = self.load_training_data(self.args.num_of_facts, self.args.data_path)
         self.training_data = None
         self.lora_model = self.apply_lora_config()
         self.train_params = self.setup_training_arguments()
-        self.tags = {'rank':self.args.rank, 'num_of_facts': self.args.num_of_facts}
 
-        self.ml_flow = MlFlowWrapper(self.args.mlflow_experiment, self.args.model_id ,self.refined_model_name, **self.tags)
+        self.ml_flow = MlFlowWrapper(self.args.mlflow_experiment, self.args.model_id ,self.refined_model_name, **self.args)
         
 
     def setup_directories(self):
@@ -153,7 +149,7 @@ class ModelTrainer:
             # Fine-tune the model on the current chunk
             
             self.fine_tuning.train_dataset = self.training_data
-            self.fine_tuning.train_dataloader = self.train_dataloader
+            self.fine_tuning.train_dataloader = self.fine_tuning.get_train_dataloader()
 
             self.fine_tuning.train()
             
@@ -162,15 +158,15 @@ class ModelTrainer:
             self.fine_tuning.model.save_pretrained(adapter_save_path, 'default')
             
             # self.ml_flow.save_adapter(self.lora_model, self.args.model_id, self.tokenizer, **self.tags)
-        self.ml_flow.end_run()
 
 
 
     def evaluate(self, model_name):
         results = []
         detailed_results = []
+        refined_model_path = os.path.join(self.cache_directory, f"{self.refined_model_name}-num-of-facts={self.args.num_of_facts}")
         # generator = self.ml_flow.check_existing_model(model_name, **self.tags)
-        self.lora_model = AutoModelForCausalLM.from_pretrained('/home/yandex/DL20232024a/noamazoulay/factualAdapt/.cache/pythia-1b-made-up-facts-r=1-num-of-facts=10', cache_dir=self.cache_directory)
+        self.lora_model = AutoModelForCausalLM.from_pretrained(self.args.model_id, cache_dir=self.cache_directory)
         generator = pipeline(
             'text-generation',
             model=self.lora_model,
@@ -203,30 +199,19 @@ class ModelTrainer:
             'num_of_facts': self.args.num_of_facts,
             'num_correct_answers': sum(results),
             'percentage_correct': percentage_correct,
-            'trainable_params': str(self.lora_model.get_nb_trainable_parameters())
         }
 
         metadata_file_path = os.path.join(self.output_dir, 'experiment_metadata.json')
         with open(metadata_file_path, 'w') as f:
             json.dump(metadata, f, indent=4)
 
-        detailed_results_file_path = os.path.join(self.output_dir, 'detailed_results.json')
-        with open(detailed_results_file_path, 'w') as f:
-            json.dump(detailed_results, f, indent=4)
+        # detailed_results_file_path = os.path.join(self.output_dir, 'detailed_results.json')
+        # with open(detailed_results_file_path, 'w') as f:
+        #     json.dump(detailed_results, f, indent=4)
 
-        self.ml_flow.log_mlflow(percentage_correct, results, metadata_file_path, detailed_results_file_path)
-
-        if self.args.wandb:
-            self.log_wandb(percentage_correct, results, metadata, detailed_results)
+        self.ml_flow.log_mlflow(percentage_correct, results, metadata_file_path)
+        self.ml_flow.end_run()
 
 
 
-    def log_wandb(self, percentage_correct, results, metadata, detailed_results):
-        self.wandb_logger.log_metrics({
-            "percentage_correct": percentage_correct,
-            "num_correct_answers": sum(results),
-            "metadata": metadata,
-            "detailed_results": detailed_results
-        })
-        self.wandb_logger.finish()
 

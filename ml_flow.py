@@ -5,12 +5,16 @@ from mlflow.tracking import MlflowClient
 
 class MlFlowWrapper:
 
-    def __init__(self, experiment, base_model_name, refined_model_name, **kwargs):
+    def __init__(self, experiment, base_model_name, refined_model_name, params_to_log = ['rank', 'num_of_facts','model_id'], **kwargs):
         self.base_model_name = base_model_name
         self.refined_model_name = refined_model_name
+        self.tags = kwargs
+        self.tags = {key: kwargs[key] for key in params_to_log }
         self.client = MlflowClient()
         mlflow.set_experiment(experiment)
-        mlflow.start_run(run_name=refined_model_name, tags=kwargs)
+    
+    def start_run(self, refined_model_name):
+        mlflow.start_run(run_name=refined_model_name, tags=self.tags)
         
 
     def get_most_trained_model_with_same_params(self, model_name, **kwargs):
@@ -104,12 +108,14 @@ class MlFlowWrapper:
             self.client.set_model_version_tag(base_model_name, logged_obj.registered_model_version, key, value)
 
         
-    def log_mlflow(self, percentage_correct, results, metadata_path, detailed_results_path):
+    def log_mlflow(self, percentage_correct, results, metadata_path, detailed_results_path=None):
         mlflow.log_metrics({
             "percentage_correct": percentage_correct,
             "num_correct_answers": sum(results)
         })
+
         mlflow.log_artifact(metadata_path)
-        mlflow.log_artifact(detailed_results_path)
+        if detailed_results_path:
+            mlflow.log_artifact(detailed_results_path)
 
 
