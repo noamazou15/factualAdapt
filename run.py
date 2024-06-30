@@ -17,6 +17,8 @@ from accelerate import Accelerator
 from log_utils.wandb import WandbLogger 
 from data.data_loader import load_json_data, list_to_dataset
 
+from ml_flow import MlFlowWrapper
+
 
 # Initialize Accelerator
 accelerator = Accelerator()
@@ -55,8 +57,8 @@ output_dir = os.path.join(log_directory, refined_model_name)
 os.makedirs(output_dir, exist_ok=True)
 
 # Initialize Weights and Biases logger
-wandb_logger = WandbLogger(project_name=args.wandb_project, run_name=refined_model_name)
-wandb_logger.init()
+# wandb_logger = WandbLogger(project_name=args.wandb_project, run_name=refined_model_name)
+# wandb_logger.init()
 
 # Tokenizer
 tokenizer = AutoTokenizer.from_pretrained(base_model_name, trust_remote_code=True, cache_dir=cache_directory)
@@ -85,6 +87,11 @@ base_model.config.pretraining_tp = 1
 #     print(f"Layer Name: {name}")
 #     print(layer)
 # Load training data
+
+tags = {'rank':r, 'num_of_facts': number_of_facts}
+ml_flow_wrapper = MlFlowWrapper(experiment='lora', base_model_name=base_model_name, refined_model_name=refined_model_name, kwargs=tags)
+
+
 json_data_path = args.data_path
 training_data_list = load_json_data(json_data_path)
 transform_function = lambda item: item['full_sentence']
@@ -159,10 +166,10 @@ print('starting inference....')
 for i in training_data_list[:number_of_facts]:
     prompted_question = i['natural_question']
     inputs = tokenizer(prompted_question, return_tensors='pt', padding=True, truncation=True)
-    output = base_model.generate(
+    output = lora_model.generate(
         inputs['input_ids'],
         attention_mask=inputs['attention_mask'],
-        max_new_tokens=20,           # Maximum length for the generated text
+        max_new_tokens=10,           # Maximum length for the generated text
         do_sample=True,          # Enable sampling
     )
 
@@ -205,12 +212,12 @@ with open(detailed_results_file_path, 'w') as f:
     json.dump(detailed_results, f, indent=4)
 
 # Log metadata and results to wandb
-wandb_logger.log_metrics({
-    "percentage_correct": percentage_correct,
-    "num_correct_answers": sum(results),
-    "metadata": metadata,
-    "detailed_results": detailed_results
-})
+# wandb_logger.log_metrics({
+#     "percentage_correct": percentage_correct,
+#     "num_correct_answers": sum(results),
+#     "metadata": metadata,
+#     "detailed_results": detailed_results
+# })
 
-# Finish wandb run
-wandb_logger.finish()
+# # Finish wandb run
+# wandb_logger.finish()

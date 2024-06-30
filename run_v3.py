@@ -15,7 +15,7 @@ from peft import LoraConfig, get_peft_model, PeftModel, set_peft_model_state_dic
 from trl import SFTTrainer
 
 from log_utils.wandb import WandbLogger 
-from data.data_loader import load_json_data, list_to_dataset
+from data.data_loader import load_json_data, list_to_tokenized_dataset
 from ml_flow import MlFlowWrapper
 
 class ModelTrainer:
@@ -34,6 +34,7 @@ class ModelTrainer:
         self.tokenizer = self.setup_tokenizer()
         self.base_model = self.load_base_model()
         self.training_data_list = self.load_training_data(self.args.num_of_facts, self.args.data_path)
+        self.training_data = None
         self.lora_model = self.apply_lora_config()
         self.train_params = self.setup_training_arguments()
         self.tags = {'rank':self.args.rank, 'num_of_facts': self.args.num_of_facts}
@@ -139,24 +140,28 @@ class ModelTrainer:
 
         chunks = [self.training_data_list[i:i + 25] for i in range(0, len(self.training_data_list), 25)]
 
+        self.fine_tuning = self.setup_trainer()
+
         facts_counter = 0
         for idx, chunk in enumerate(chunks):
             self.accelerator.print(f"Training on chunk {idx + 1}/{len(chunks)}...")
             facts_counter += 25
             # Convert chunk to dataset
-            self.training_data = list_to_dataset(chunk, len(chunk), lambda item: item['full_sentence'])
+            self.training_data = list_to_tokenized_dataset(chunk, len(chunk), self.tokenizer)
             self.train_dataloader = self.setup_dataloader()
 
             # Fine-tune the model on the current chunk
-            self.fine_tuning = self.setup_trainer()
+            
+            self.fine_tuning.train_dataset = self.training_data
+            self.fine_tuning.train_dataloader = self.train_dataloader
+
             self.fine_tuning.train()
             
             # Save the adapter
             adapter_save_path = os.path.join(self.cache_directory, f"{self.refined_model_name}-num-of-facts={facts_counter}")
-            self.lora_model.save_pretrained(adapter_save_path)
-
-            # Log the adapter using MLflow
-            self.ml_flow.save_adapter(self.lora_model, self.args.model_id, self.tokenizer, **self.tags)
+            self.fine_tuning.model.save_pretrained(adapter_save_path, 'default')
+            
+            # self.ml_flow.save_adapter(self.lora_model, self.args.model_id, self.tokenizer, **self.tags)
         self.ml_flow.end_run()
 
 
@@ -164,11 +169,19 @@ class ModelTrainer:
     def evaluate(self, model_name):
         results = []
         detailed_results = []
-        generator = self.ml_flow.check_existing_model(model_name, **self.tags)
+        # generator = self.ml_flow.check_existing_model(model_name, **self.tags)
+        self.lora_model = AutoModelForCausalLM.from_pretrained('/home/yandex/DL20232024a/noamazoulay/factualAdapt/.cache/pythia-1b-made-up-facts-r=1-num-of-facts=10', cache_dir=self.cache_directory)
+        generator = pipeline(
+            'text-generation',
+            model=self.lora_model,
+            tokenizer=self.tokenizer,
+            max_new_tokens=10,
+            max_length=100
+        )
         print('starting inference....')
         for i in self.training_data_list:
             prompted_question = i['natural_question']
-            output = generator(prompted_question, max_new_tokens=10)[0]['generated_text']
+            output = generator(prompted_question)[0]['generated_text']
             print(output)
             correct = i['natural_answer'].lower() in output.lower()
             results.append(1 if correct else 0)
