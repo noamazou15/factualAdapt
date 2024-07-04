@@ -7,4 +7,4 @@ RUN pip install --no-cache-dir transformers==4.40.2 accelerate==0.27.2 peft==0.1
 
 COPY main.py .
 ENV PYTHONPATH="${PYTHONPATH}:/app"
-CMD ["python", "run_experiments.py"]
+CMD ["python", "main.py"]
