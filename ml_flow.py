@@ -9,11 +9,12 @@ class MlFlowWrapper:
         self.base_model_name = base_model_name
         self.refined_model_name = refined_model_name
         self.tags = kwargs
-        self.tags = {key: kwargs[key] for key in params_to_log }
+        self.tags = {key: kwargs.get(key) for key in params_to_log }
         self.client = MlflowClient()
         mlflow.set_experiment(experiment)
     
     def start_run(self, refined_model_name):
+        print(self.tags)
         mlflow.start_run(run_name=refined_model_name, tags=self.tags)
         
 

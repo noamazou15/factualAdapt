@@ -10,8 +10,8 @@ def setup_training_arguments(output_dir):
         per_device_train_batch_size=4,
         gradient_accumulation_steps=1,
         optim="paged_adamw_32bit",
-        save_steps=25,
-        logging_steps=25,
+        save_steps=10000,
+        logging_steps=10000,
         learning_rate=2e-3,
         weight_decay=0.001,
         fp16=True,
@@ -21,22 +21,9 @@ def setup_training_arguments(output_dir):
         warmup_ratio=0.03,
         group_by_length=True,
         lr_scheduler_type="constant",
-        report_to=["tensorboard"],
-        logging_dir=os.path.join(output_dir, 'logs')
     )
 
-def setup_trainer(model, training_data, tokenizer, train_params, rank):
-    from peft import LoraConfig, get_peft_model
-
-    peft_parameters = LoraConfig(
-        lora_alpha=16,
-        lora_dropout=0.1,
-        r=rank,
-        bias="none",
-        task_type="CAUSAL_LM"
-    )
-
-    lora_model = get_peft_model(model, peft_parameters)
+def setup_trainer(lora_model, training_data, tokenizer, train_params, peft_parameters):
 
     return SFTTrainer(
         model=lora_model,
@@ -46,3 +33,12 @@ def setup_trainer(model, training_data, tokenizer, train_params, rank):
         tokenizer=tokenizer,
         args=train_params
     )
+
+
+def get_lora_target_modules(specific_layers, base_model):
+    attention_layers = []
+    for name, module in base_model.named_modules():
+        if 'attention' in name.lower():
+            attention_layers.append((name, module))
+    return attention_layers
+    return specific_layers if specific_layers else None

@@ -26,9 +26,7 @@ def load_base_model(model_id, cache_directory):
     return model
 
 
-def load_adapter(model_id, adapter_path, cache_directory):
-
-    base_model = AutoModelForCausalLM.from_pretrained(model_id, cache_dir=cache_directory)
+def load_adapter(base_model, adapter_path):
     
     model = PeftModel.from_pretrained(base_model, adapter_path)
     
