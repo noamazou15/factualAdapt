@@ -15,7 +15,6 @@ from peft import LoraConfig, get_peft_model
 from trl import SFTTrainer
 from accelerate import Accelerator
 from data.data_loader import load_json_data, list_to_dataset
-
 from ml_flow import MlFlowWrapper
 
 
@@ -26,6 +25,8 @@ os.environ["TOKENIZERS_PARALLELISM"] = "false"
 warnings.filterwarnings("ignore", message="Setting `pad_token_id` to `eos_token_id`:0 for open-end generation.")
 
 
+def parse_layers(layer):
+    return int(layer)
 
 # Set up command-line argument parsing
 parser = argparse.ArgumentParser(description="Train a model with LoRA.")
@@ -34,8 +35,10 @@ parser.add_argument("--num_of_facts", type=int, default=100000, help="Number of 
 parser.add_argument("--model_id", type=str, required=True, help="The Hugging Face model ID.")
 parser.add_argument("--data_path", type=str, default='data/made_up_questions_v3.json', help="Path to the JSON dataset.")
 parser.add_argument("--build_data", action='store_true', help="Flag to build your data again")
-parser.add_argument("--wandb_project", type=str, default="lora-training", help="Weights and Biases project name.")
 parser.add_argument("--deepspeed_config", type=str, default="slurm/ds_config.json", help="deepspeed configuration file.")
+parser.add_argument('--layer_modules', nargs='+', default=None, help='List of specific layers to apply LoRA to. If not provided, LoRA will be applied to all layers.')    
+parser.add_argument('--layers_to_transform', nargs='+', type=parse_layers, default=None, help='List of specific layers to apply LoRA to. If not provided, LoRA will be applied to all layers.')
+parser.add_argument("--mlflow_experiment", type=str, default="lora-training-experiment", help="MLflow experiment name")
 
 args = parser.parse_args()
 
@@ -51,17 +54,23 @@ os.makedirs(log_directory, exist_ok=True)
 real_questions = True if args.data_path=='/home/yandex/DL20232024a/noamazoulay/factualAdapt/data/DataSetFQA2.json' else False
 
 # Define output model name and paths
+layers_str = '_'.join(args.layer_modules) if args.layer_modules else 'all'
+layers_num_str = '_'.join(map(str, args.layers_to_transform)) if args.layers_to_transform else 'all'
+
 if not real_questions:
-    refined_model_name = f"{base_model_name.split('/')[-1]}-made-up-facts-r={r}-num-of-facts={number_of_facts}"
+    refined_model_name = f"{base_model_name.split('/')[-1]}-made-up-facts-r={r}-num-of-facts={number_of_facts}-layers={layers_str}--layers_num={layers_num_str}"
 else:
-    refined_model_name = f"{base_model_name.split('/')[-1]}-real-facts-r={r}-num-of-facts={number_of_facts}"
+    refined_model_name = f"{base_model_name.split('/')[-1]}-real-facts-r={r}-num-of-facts={number_of_facts}-layers={layers_str}--layers_num={layers_num_str}"
     
 output_dir = os.path.join(log_directory, refined_model_name)
 os.makedirs(output_dir, exist_ok=True)
 
-# Initialize Weights and Biases logger
-# wandb_logger = WandbLogger(project_name=args.wandb_project, run_name=refined_model_name)
-# wandb_logger.init()
+ml_flow = MlFlowWrapper(args.mlflow_experiment, args.model_id, refined_model_name,
+                                    ['rank', 'num_of_facts', 'model_id', 'layers_to_transform','layer_modules'], 
+                                    **{'num_of_facts':args.num_of_facts, 'rank':args.rank, 'model_id':args.model_id,
+                                        'layers_to_transform':args.layers_to_transform, 'layer_modules':args.layer_modules})
+
+ml_flow.start_run(refined_model_name)
 
 # Tokenizer
 tokenizer = AutoTokenizer.from_pretrained(base_model_name, trust_remote_code=True, cache_dir=cache_directory)
@@ -86,14 +95,6 @@ base_model = AutoModelForCausalLM.from_pretrained(
 base_model.config.use_cache = True
 base_model.config.pretraining_tp = 1
 
-# for name, layer in base_model.named_modules():
-#     print(f"Layer Name: {name}")
-#     print(layer)
-# Load training data
-
-tags = {'rank':r, 'num_of_facts': number_of_facts}
-ml_flow_wrapper = MlFlowWrapper(experiment='lora', base_model_name=base_model_name, refined_model_name=refined_model_name, kwargs=tags)
-
 
 json_data_path = args.data_path
 
@@ -106,14 +107,15 @@ training_data = list_to_dataset(training_data_list, number_of_facts, transform_f
 
 # Prepare data loader with Accelerator
 train_dataloader = torch.utils.data.DataLoader(training_data, batch_size=4, shuffle=True)
-
 # LoRA Config
 peft_parameters = LoraConfig(
     lora_alpha=16,
     lora_dropout=0.1,
     r=r,
     bias="none",
-    task_type="CAUSAL_LM"
+    target_modules=args.layer_modules,
+    task_type="CAUSAL_LM",
+    layers_to_transform=args.layers_to_transform
 )
 
 # Apply LoRA configuration to the model
@@ -221,18 +223,10 @@ metadata_file_path = os.path.join(output_dir, 'experiment_metadata.json')
 with open(metadata_file_path, 'w') as f:
     json.dump(metadata, f, indent=4)
 
+ml_flow.log_mlflow(percentage_correct, results, metadata_file_path)
+ml_flow.end_run()
 # Save detailed results
 # detailed_results_file_path = os.path.join(output_dir, 'detailed_results.json')
 # with open(detailed_results_file_path, 'w') as f:
 #     json.dump(detailed_results, f, indent=4)
 
-# Log metadata and results to wandb
-# wandb_logger.log_metrics({
-#     "percentage_correct": percentage_correct,
-#     "num_correct_answers": sum(results),
-#     "metadata": metadata,
-#     "detailed_results": detailed_results
-# })
-
-# # Finish wandb run
-# wandb_logger.finish()

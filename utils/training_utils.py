@@ -6,21 +6,20 @@ from trl import SFTTrainer
 def setup_training_arguments(output_dir):
     return TrainingArguments(
         output_dir=output_dir,
-        num_train_epochs=10,
+        num_train_epochs=1,
         per_device_train_batch_size=4,
         gradient_accumulation_steps=1,
         optim="paged_adamw_32bit",
         save_steps=10000,
         logging_steps=10000,
-        learning_rate=2e-3,
-        weight_decay=0.001,
+        learning_rate=1e-5,
+        weight_decay=0.0,
         fp16=True,
         bf16=False,
-        max_grad_norm=0.3,
-        max_steps=-1,
+        max_grad_norm=None,
         warmup_ratio=0.03,
         group_by_length=True,
-        lr_scheduler_type="constant",
+        lr_scheduler_type="cosine",
     )
 
 def setup_trainer(lora_model, training_data, tokenizer, train_params, peft_parameters):

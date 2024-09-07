@@ -14,8 +14,9 @@ def main():
     parser.add_argument("--deepspeed_config", type=str, default="slurm/ds_config.json", help="deepspeed configuration file.")
     parser.add_argument("--wandb", type=bool, default=False, help="whether to use weights and biases to log.")
     parser.add_argument("--mlflow_experiment", type=str, default="lora-training-experiment", help="MLflow experiment name")
-    parser.add_argument("--log_interval", type=str, default="25", help="once in how many facts log the model")
-
+    parser.add_argument("--log_interval", type=str, default=None, help="once in how many facts log the model")
+    parser.add_argument('--use_specific_layers', type=bool, default=False, help='Whether to apply LoRA to specific layers only')
+    
     args = parser.parse_args()
 
     trainer = ModelTrainer(args)

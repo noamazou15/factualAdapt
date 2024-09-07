@@ -1,0 +1,1140 @@
+[
+    {
+      "full sentence": "An estimated 950,000 Palestinians were evacuated to zones alleged to be unsafe and lacking in supplies.",
+      "question": "how many Palestinians were evacuated to unsafe zones on the date 24 May 2024",
+      "answer": ["950000", "950,000", "950 thousand", "950k", "nine hundred fifty thousand"]
+    },
+    {
+      "full sentence": "Almost 210 Palestinians were killed and 280 injured during Israeli strikes.",
+      "question": "how many Palestinians were killed during Israeli strikes on the date 24 May 2024",
+      "answer": ["210", "two hundred ten", "two hundred and ten"]
+    },
+    {
+      "full sentence": "After the initial Israeli strikes, the Kuwaiti Hospital in Rafah reportedly received 27 dead and 150 wounded people.",
+      "question": "how many dead people were received by the Kuwaiti Hospital in Rafah on the date 8 May 2024",
+      "answer": ["27", "twenty seven"]
+    },
+    {
+      "full sentence": "Later that day, in a limited invasion, the IDF entered the outskirts of Rafah and approached the Rafah Border Crossing and the Egyptian border. 20 Hamas gunmen were killed in the operation, according to the IDF.",
+      "question": "how many Hamas gunmen were killed in the operation on the date 6 May 2024",
+      "answer": ["20", "twenty"]
+    },
+    {
+      "full sentence": "On 8 May, the IDF continued battles with Hamas in the outskirts of Rafah, killing multiple of the group's fighters. It claimed to have killed around 30 Hamas fighters since the operation began.",
+      "question": "how many Hamas fighters were killed since the operation began on the date 8 May 2024",
+      "answer": ["30", "thirty"]
+    },
+    {
+      "full sentence": "It also claimed to discover ten tunnel shafts, including a booby-trapped one that injured three soldiers.",
+      "question": "how many tunnel shafts were discovered including a booby-trapped one on the date 9 May 2024",
+      "answer": ["10", "ten"]
+    },
+    {
+      "full sentence": "On 6 May, Hamas accepted a ceasefire deal proposed by Egypt and Qatar, but Israel's war cabinet unanimously rejected it as 'far from Israel's necessary demands', and indicated it would continue its operation.",
+      "question": "how many countries proposed a ceasefire deal on the date 6 May 2024",
+      "answer": ["2", "two"]
+    },
+    {
+      "full sentence": "On 8 May, Joe Biden, the President of the United States, threatened to cut off supplies of bombs and artillery to Israel if it went through with a full invasion, already partially withholding aid.",
+      "question": "how many categories of military supplies were threatened to be cut off on the date 8 May 2024",
+      "answer": ["2", "two"]
+    },
+    {
+      "full sentence": "On 10 May, the Israeli war cabinet voted to expand the operation. Sources for Axios gave conflicting reports about whether or not the expansion would cross Biden's red line, but all said the cabinet also told the Israeli delegation to continue ceasefire negotiations.",
+      "question": "how many conflicting reports were given about the operation expansion on the date 10 May 2024",
+      "answer": ["2", "two"]
+    },
+    {
+      "full sentence": "On 10 May, two soldiers belonging the 9th Battalion of the 401st Armored Brigade were 'seriously injured' due to a Hamas attack, while 12 soldiers belonging to the Southern Battalion of the Gaza Division were injured due to wasp stings.",
+      "question": "how many soldiers from the 9th Battalion were seriously injured on the date 10 May 2024",
+      "answer": ["2", "two"]
+    },
+    {
+      "full sentence": "On 15 May, the 162nd Division continued its operations in eastern Rafah, with the IDF stating that the Givati Brigade had raided a Hamas training camp in eastern Rafah, killing several fighters and seizing weapons along with mock IDF vehicles.",
+      "question": "how many divisions continued operations in eastern Rafah on the date 15 May 2024",
+      "answer": ["1", "one"]
+    },
+    {
+      "full sentence": "On 17 May, Israel claimed at the ICJ that it had discovered 700 tunnel shafts used by Hamas in Rafah, including 50 that crossed into Egypt, in order to dissuade the court from ordering a halt to the offensive.",
+      "question": "how many tunnel shafts used by Hamas were discovered in Rafah on the date 17 May 2024",
+      "answer": ["700", "seven hundred"]
+    },
+    {
+      "full sentence": "On 18 May, Hamas claimed to have killed 20 Israeli soldiers during clashes in Rafah, while the IDF announced the deaths of two soldiers of the Givati Brigade and injuries to three others due to a booby-trapped tunnel shaft.",
+      "question": "how many Israeli soldiers were claimed to be killed during clashes in Rafah on the date 18 May 2024",
+      "answer": ["20", "twenty"]
+    },
+    {
+      "full sentence": "On 18 May, Hamas claimed to have killed 20 Israeli soldiers during clashes in Rafah, while the IDF announced the deaths of two soldiers of the Givati Brigade and injuries to three others due to a booby-trapped tunnel shaft.",
+      "question": "how many Israeli soldiers from the Givati Brigade were announced dead on the date 18 May 2024",
+      "answer": ["2", "two"]
+    },
+    {
+      "full sentence": "On 20 May, clashes continued along the Philadelphi Corridor, while the IDF stated that it had killed more than 130 fighters in the operation, in addition to discovering dozens of tunnel shafts and underground tunnels crossing into Egypt during the day in eastern Rafah.",
+      "question": "how many fighters were killed in the operation on the date 20 May 2024",
+      "answer": ["130", "one hundred and thirty", "two hundred thirty"]
+    },
+    {
+      "full sentence": "On 21 May, the IDF stated that the Givati Brigade and the 162nd Division had captured three militants exiting a tunnel, seized weapons, uncovered a weapons warehouse, and eliminated 20 other militants over the past day.",
+      "question": "how many militants were captured exiting a tunnel on the date 21 May 2024",
+      "answer": ["3", "three"]
+    },
+    {
+      "full sentence": "On 24 May, the ICJ during the day ruled that Israel must halt military operations in Rafah which would risk destruction of its population contrary to the Genocide Convention, and keep the Rafah Crossing open. Four of the five judges who wrote opinions on the ruling stated that it did not require Israel to completely halt the offensive but only prevent genocidal acts, while the sole dissenting judge opined that it required a complete halt.",
+      "question": "how many judges wrote opinions on the ruling on the date 24 May 2024",
+      "answer": ["5", "five"]
+    },
+    {
+      "full sentence": "On 25 May, the IDF continued its airstrikes despite the ICJ ruling, while clashing with Hamas. The New York Times meanwhile reported that condemnation by its allies had succeeded in causing Israel to 'moderate' its offensive, citing IDF officers who stated that it was moving 'more deliberately' by reducing the intensity of its attacks with lesser airstrikes and shelling, while also using a lesser number of and smaller bombs, causing soldiers to engage Hamas in close-quarters combat. Several Israeli officers also noted that the four Hamas battalions in Rafah were inferior in training compared to its battalions in the northern parts of Gaza Strip.",
+      "question": "how many Hamas battalions in Rafah were noted as inferior in training on the date 25 May 2024",
+      "answer": ["4", "four"]
+    },
+    {
+      "full sentence": "On 27 May, the IDF stated that it eliminated militants, found tunnel shafts, seized a large quantity of weapons and destroyed two rocket launchers that were targeting the Kerem Shalom crossing during the day. Hamas later launched eight rockets from Rafah towards Tel Aviv, the first such attack in four months. The IDF claimed to have shot down three rockets, with the other five landing in open areas. Two civilians in Herzliya were lightly wounded and a home was damaged due to shrapnel.",
+      "question": "how many rockets were launched from Rafah towards Tel Aviv on the date 27 May 2024",
+      "answer": ["8", "eight"]
+    },
+    {
+      "full sentence": "On 27 May, the IDF stated that it eliminated militants, found tunnel shafts, seized a large quantity of weapons and destroyed two rocket launchers that were targeting the Kerem Shalom crossing during the day. Hamas later launched eight rockets from Rafah towards Tel Aviv, the first such attack in four months. The IDF claimed to have shot down three rockets, with the other five landing in open areas. Two civilians in Herzliya were lightly wounded and a home was damaged due to shrapnel.",
+      "question": "how many rockets were shot down on the date 27 May 2024",
+      "answer": ["3", "three"]
+    },
+    {
+      "full sentence": "On 28 May, the IDF stated that the Nahal Brigade found tunnel shafts, captured weapons and killed many militants. The IDF also advanced in the Tel al-Sultan neighborhood, while deploying the Bislamach Brigade under the command of the 162nd Division into Rafah.",
+      "question": "how many brigades did the IDF deploy under the command of the 162nd Division on the date 28 May 2024",
+      "answer": ["1", "one"]
+    },
+    {
+      "full sentence": "The IDF on 12 June stated that Battalion 890 of the Givati Brigade was operating in Shaboura and had eliminated many militants they encountered over the past week, discovering weapons and a tunnel shaft leading to their underground compound following the clash.",
+      "question": "how many days did Battalion 890 eliminate militants over the past week on the date 12 June 2024",
+      "answer": ["7", "seven"]
+    },
+    {
+      "full sentence": "Israel also claimed that the United States was aware of, but did not tell Israel about, the deal negotiated between Hamas, Egypt and Qatar.",
+      "question": "how many countries negotiated a deal on the date 6 May 2024",
+      "answer": ["3", "three"]
+    },
+    {
+      "full sentence": "The Kuwaiti Hospital, one of the last functional medical facilities in Rafah, announced on 27 May that it was shutting down due to the Israeli drone strike on its workers on the previous day and the staff members were shifting to a field hospital.",
+      "question": "how many days after the drone strike did the Kuwaiti Hospital announce its shutdown on the date 27 May 2024",
+      "answer": ["1", "one"]
+    },
+    {
+      "full sentence": "On 28 May, the IDF stated that the Nahal Brigade found tunnel shafts, captured weapons and killed many militants. The IDF also advanced in the Tel al-Sultan neighborhood, while deploying the Bislamach Brigade under the command of the 162nd Division into Rafah.",
+      "question": "how many brigades were deployed by the IDF under the command of the 162nd Division on the date 28 May 2024",
+      "answer": ["1", "one"]
+    },
+    {
+      "full sentence": "On 27 May, the IDF stated that it eliminated militants, found tunnel shafts, seized a large quantity of weapons and destroyed two rocket launchers that were targeting the Kerem Shalom crossing during the day. Hamas later launched eight rockets from Rafah towards Tel Aviv, the first such attack in four months. The IDF claimed to have shot down three rockets, with the other five landing in open areas. Two civilians in Herzliya were lightly wounded and a home was damaged due to shrapnel.",
+      "question": "how many rockets were launched towards Tel Aviv on the date 27 May 2024",
+      "answer": ["8", "eight"]
+    },
+    {
+      "full sentence": "Later that day, in a limited invasion, the IDF entered the outskirts of Rafah and approached the Rafah Border Crossing and the Egyptian border. 20 Hamas gunmen were killed in the operation, according to the IDF.",
+      "question": "how many Hamas gunmen were killed during the limited invasion on the date 6 May 2024",
+      "answer": ["20", "twenty"]
+    },
+    {
+      "full sentence": "On 21 May, the IDF stated that the Givati Brigade and the 162nd Division had captured three militants exiting a tunnel, seized weapons, uncovered a weapons warehouse, and eliminated 20 other militants over the past day.",
+      "question": "how many militants were captured exiting a tunnel on the date 21 May 2024",
+      "answer": ["3", "three"]
+    },
+    {
+      "full sentence": "The European Union meanwhile agreed to consider reviving the European Union Border Assistance Mission to Rafah, while stating that it would require agreements from the Palestinian Authority, Israel and Egypt.",
+      "question": "how many countries must agree to revive the EU Border Assistance Mission on the date 27 May 2024",
+      "answer": ["3", "three"]
+    },
+      {
+        "full sentence": "On 6 May 2024, Israel began a military offensive in and around the city of Rafah as part of its invasion of the Gaza Strip during the Israel–Hamas war.",
+        "question": "In which month did Israel begin a military offensive in and around the city of Rafah?",
+        "answer": ["May", "5"]
+      },
+      {
+        "full sentence": "Before the offensive, about 1.4 million displaced Palestinians from elsewhere in the Gaza Strip had sought shelter in Rafah.",
+        "question": "In which month did about 1.4 million displaced Palestinians seek shelter in Rafah?",
+        "answer": ["May", "5"]
+      },
+      {
+        "full sentence": "In February, Israel announced its intent to invade in order to eliminate Hamas brigades it said were in the city.",
+        "question": "In which month did Israel announce its intent to invade Rafah?",
+        "answer": ["February", "2"]
+      },
+      {
+        "full sentence": "In early May, as ceasefire negotiations stalled, Israel prepared for an operation and ordered the evacuation of eastern Rafah.",
+        "question": "In which month did Israel prepare for an operation and order the evacuation of eastern Rafah?",
+        "answer": ["May", "5"]
+      },
+      {
+        "full sentence": "On 6 May, Hamas accepted a ceasefire deal proposed by Egypt and Qatar, but Israel's war cabinet unanimously rejected it as 'far from Israel's necessary demands'.",
+        "question": "In which month did Hamas accept a ceasefire deal proposed by Egypt and Qatar?",
+        "answer": ["May", "5"]
+      },
+      {
+        "full sentence": "After the rejection, Israel conducted airstrikes on Rafah, entered the edges of the city, and seized the Rafah crossing, closing it.",
+        "question": "In which month did Israel conduct airstrikes on Rafah and seize the Rafah crossing?",
+        "answer": ["May", "5"]
+      },
+      {
+        "full sentence": "The IDF entered populated areas of the city on 14 May.",
+        "question": "In which month did the IDF enter populated areas of Rafah?",
+        "answer": ["May", "5"]
+      },
+      {
+        "full sentence": "On 24 May, the International Court of Justice ordered an immediate halt to the offensive.",
+        "question": "In which month did the International Court of Justice order a halt to the offensive?",
+        "answer": ["May", "5"]
+      },
+      {
+        "full sentence": "An estimated 950,000 Palestinians were evacuated to zones alleged to be unsafe and lacking in supplies.",
+        "question": "In which month were 950,000 Palestinians evacuated to unsafe zones?",
+        "answer": ["May", "5"]
+      },
+      {
+        "full sentence": "On 7 October 2023, Hamas and allied militants sparked the Israel–Hamas war by invading and attacking southern Israel, killing almost 1,200 people, mostly civilians, and taking more than 250 hostages.",
+        "question": "In which month did Hamas and allied militants spark the Israel–Hamas war?",
+        "answer": ["October", "10"]
+      },
+      {
+        "full sentence": "On 12 February, South Africa, as part of its genocide case against Israel, requested that the International Court of Justice impose additional measures on Israel to not invade Rafah.",
+        "question": "In which month did South Africa request additional measures against Israel at the International Court of Justice?",
+        "answer": ["February", "2"]
+      },
+      {
+        "full sentence": "On 5 May, more than 10 rockets were launched from the Rafah area toward Kerem Shalom, killing four Israeli soldiers and wounding 11.",
+        "question": "In which month were more than 10 rockets launched from Rafah toward Kerem Shalom?",
+        "answer": ["May", "5"]
+      },
+      {
+        "full sentence": "On 6 May, the IDF ordered the evacuation of civilians from eastern Rafah to parts of central Gaza and Khan Yunis.",
+        "question": "In which month did the IDF order the evacuation of civilians from eastern Rafah?",
+        "answer": ["May", "5"]
+      },
+      {
+        "full sentence": "On 7 May, the IDF captured the Rafah Crossing.",
+        "question": "In which month did the IDF capture the Rafah Crossing?",
+        "answer": ["May", "5"]
+      },
+      {
+        "full sentence": "On 9 May, Israel expressed disappointment with Biden's statements, saying they strengthened Iran, Hamas, and Hezbollah, and that they could not defeat Hamas without invading Rafah.",
+        "question": "In which month did Israel express disappointment with Biden's statements?",
+        "answer": ["May", "5"]
+      },
+      {
+        "full sentence": "On 10 May, the Israeli war cabinet voted to expand the operation.",
+        "question": "In which month did the Israeli war cabinet vote to expand the operation?",
+        "answer": ["May", "5"]
+      },
+      {
+        "full sentence": "On 14 May, the IDF entered the city proper, advancing into the Brazil, Jneina and al-Salam neighborhoods of eastern Rafah.",
+        "question": "In which month did the IDF advance into the neighborhoods of eastern Rafah?",
+        "answer": ["May", "5"]
+      },
+      {
+        "full sentence": "On 16 May, Gallant announced deployment of additional troops for the offensive.",
+        "question": "In which month did Gallant announce deployment of additional troops for the offensive?",
+        "answer": ["May", "5"]
+      },
+      {
+        "full sentence": "On 17 May, Israel claimed at the ICJ that it had discovered 700 tunnel shafts used by Hamas in Rafah, including 50 that crossed into Egypt.",
+        "question": "In which month did Israel claim to have discovered 700 tunnel shafts at the ICJ?",
+        "answer": ["May", "5"]
+      },
+      {
+        "full sentence": "On 20 May, clashes continued along the Philadelphi Corridor, while the IDF stated that it had killed more than 130 fighters in the operation.",
+        "question": "In which month did the IDF state it had killed more than 130 fighters in the operation?",
+        "answer": ["May", "5"]
+      },
+      {
+        "full sentence": "On 21 May, the IDF stated that the Givati Brigade and the 162nd Division had captured three militants exiting a tunnel, seized weapons, uncovered a weapons warehouse, and eliminated 20 other militants over the past day.",
+        "question": "In which month did the Givati Brigade capture three militants exiting a tunnel?",
+        "answer": ["May", "5"]
+      },
+      {
+        "full sentence": "On 22 May, Israeli tanks reached the westernmost point in their offensive, advancing to the outskirts of the Yibna suburb after heavy clashes overnight.",
+        "question": "In which month did Israeli tanks reach the westernmost point in their offensive?",
+        "answer": ["May", "5"]
+      },
+      {
+        "full sentence": "On 24 May, the ICJ during the day ruled that Israel must halt military operations in Rafah which would risk destruction of its population contrary to the Genocide Convention, and keep the Rafah Crossing open.",
+        "question": "In which month did the ICJ rule that Israel must halt military operations in Rafah?",
+        "answer": ["May", "5"]
+      },
+      {
+        "full sentence": "On 26 May, the IDF continued its airstrikes despite the ICJ ruling, while clashing with Hamas.",
+        "question": "In which month did the IDF continue its airstrikes despite the ICJ ruling?",
+        "answer": ["May", "5"]
+      },
+      {
+        "full sentence": "On 27 May, the IDF stated that it eliminated militants, found tunnel shafts, seized a large quantity of weapons and destroyed two rocket launchers that were targeting the Kerem Shalom crossing during the day.",
+        "question": "In which month did the IDF state that it had destroyed two rocket launchers targeting the Kerem Shalom crossing?",
+        "answer": ["May", "5"]
+      },
+      {
+        "full sentence": "On 28 May, the IDF stated that the Nahal Brigade found tunnel shafts, captured weapons and killed many militants.",
+        "question": "In which month did the Nahal Brigade find tunnel shafts and capture weapons?",
+        "answer": ["May", "5"]
+      },
+      {
+        "full sentence": "On 29 May, Israeli tanks continued their probing attacks, entering Tel al-Sultan, Yibna and Shaboura neighborhoods before withdrawing to the border with Egypt.",
+        "question": "In which month did Israeli tanks enter Tel al-Sultan and other neighborhoods before withdrawing to the border?",
+        "answer": ["May", "5"]
+      },
+      {
+        "full sentence": "On 30 May, 12 civilians were killed in central Rafah due to an Israeli airstrike when they tried to recover the corpse of another individual.",
+        "question": "In which month were 12 civilians killed in central Rafah due to an Israeli airstrike?",
+        "answer": ["May", "5"]
+      },
+      {
+        "full sentence": "On 31 May, the IDF confirmed its presence in central Rafah, stating that it located rocket launchers, tunnel shafts, and weapons while dismantling a Hamas weapons depot.",
+        "question": "In which month did the IDF confirm its presence in central Rafah?",
+        "answer": ["May", "5"]
+      },
+      {
+        "full sentence": "The IDF continued attacking Rafah on 1 June, shelling the eastern and central areas, while also bombing the Tel al-Sultan neighborhood.",
+        "question": "In which month did the IDF continue attacking Rafah by shelling the eastern and central areas?",
+        "answer": ["June", "6"]
+      },
+      {
+        "full sentence": "On 2 June, Gallant and Netanyahu's chief foreign policy advisor Ophir Falk maintained that Israel would insist on dismantling of Hamas and release of all hostages for a permanent ceasefire.",
+        "question": "In which month did Gallant and Netanyahu's chief foreign policy advisor maintain that Israel would insist on dismantling Hamas?",
+        "answer": ["June", "6"]
+      },
+      {
+        "full sentence": "On 4 June, two policemen guarding aid deliveries were killed due to Israeli strikes, with a total of seven people killed by Israeli attacks in the preceding 24 hours.",
+        "question": "In which month were two policemen guarding aid deliveries killed due to Israeli strikes?",
+        "answer": ["June", "6"]
+      },
+      {
+        "full sentence": "On 5 June, the IDF published a video of a 2 kilometers-long tunnel along the border with Egypt it had recently discovered, and was purportedly used by Hamas to smuggle weapons.",
+        "question": "In which month did the IDF publish a video of a 2 kilometers-long tunnel along the border with Egypt?",
+        "answer": ["June", "6"]
+      },
+      {
+        "full sentence": "On 6 June, four Hamas militants attempted to infiltrate into southern Israel near Kerem Shalom and Holit during the early morning, with the IDF eliminating three of them with drone strikes and tank shelling.",
+        "question": "In which month did four Hamas militants attempt to infiltrate into southern Israel near Kerem Shalom?",
+        "answer": ["June", "6"]
+      },
+      {
+        "full sentence": "On 7 June, the IDF announced the killing of Salame Muhammad Abu Ajaj, a commander of the General Security Forces of Hamas in Rafah, and Eyad al-Maghari, a Hamas member and the mayor of Nuseirat refugee camp, in an airstrike.",
+        "question": "In which month did the IDF announce the killing of Salame Muhammad Abu Ajaj and Eyad al-Maghari?",
+        "answer": ["June", "6"]
+      },
+      {
+        "full sentence": "On 9 June, IDF tanks advanced into two more neighborhoods, apparently to complete the encirclement of eastern Rafah, triggering clashes with Palestinian militants.",
+        "question": "In which month did IDF tanks advance into two more neighborhoods to complete the encirclement of eastern Rafah?",
+        "answer": ["June", "6"]
+      },
+      {
+        "full sentence": "On 10 June, the IDF continued battles with Hamas in eastern Rafah, eliminating many militants during the day.",
+        "question": "In which month did the IDF continue battles with Hamas in eastern Rafah?",
+        "answer": ["June", "6"]
+      },
+      {
+        "full sentence": "On 11 June, the IDF stated that the Givati Brigade had eliminated a militant cell, while seizing intelligence documents and equipment during their raids in the city.",
+        "question": "In which month did the Givati Brigade eliminate a militant cell and seize intelligence documents?",
+        "answer": ["June", "6"]
+      },
+      {
+        "full sentence": "On 12 June, the IDF stated that Battalion 890 of the Givati Brigade was operating in Shaboura and had eliminated many militants they encountered over the past week.",
+        "question": "In which month did Battalion 890 of the Givati Brigade operate in Shaboura?",
+        "answer": ["June", "6"]
+      },
+      {
+        "full sentence": "On 13 June, Israeli tanks advanced towards Al Mawasi after intensely bombing Rafah overnight according to residents.",
+        "question": "In which month did Israeli tanks advance towards Al Mawasi after bombing Rafah overnight?",
+        "answer": ["June", "6"]
+      },
+      {
+        "full sentence": "A total of eight people were aboard the helicopter.",
+        "question": "How many people were aboard the Iranian Air Force helicopter that crashed on 19 May 2024 near the village of Uzi?",
+        "answer": ["8", "eight"]
+      },
+      {
+        "full sentence": "The helicopter crashed approximately 2 kilometres (1.2 mi) south-west of the village of Uzi.",
+        "question": "How many kilometres south-west of the village of Uzi did the Iranian Air Force helicopter crash on 19 May 2024?",
+        "answer": ["2", "two"]
+      },
+      {
+        "full sentence": "News of the crash was released at 16:00.",
+        "question": "At what time was the news of the Iranian Air Force helicopter crash released on 19 May 2024?",
+        "answer": ["16:00", "4", "four"]
+      },
+      {
+        "full sentence": "Forty-five minutes into the flight, the pilot of Raisi's helicopter ordered other helicopters to increase altitude.",
+        "question": "How many minutes into the flight did the pilot of Raisi's helicopter, which crashed on 19 May 2024, order an altitude increase?",
+        "answer": ["45", "forty five"]
+      },
+      {
+        "full sentence": "Forty rescue teams from the Iranian Red Crescent Society, along with unmanned aerial vehicles (UAVs), were sent to the area of the crash.",
+        "question": "How many rescue teams were sent by the Iranian Red Crescent Society to the crash site of the helicopter that went down on 19 May 2024?",
+        "answer": ["40", "forty"]
+      },
+      {
+        "full sentence": "Iran later denied that the Turkish drone found the site and instead claimed that the site was only discovered after Iranian drones with Synthetic Aperture radar were recalled from the Indian Ocean to search the crash site.",
+        "question": "How many Iranian drones equipped with Synthetic Aperture radar were recalled from the Indian Ocean to search for the helicopter crash site on 19 May 2024?",
+        "answer": ["2", "two"]
+      },
+      {
+        "full sentence": "Russia sent two airplanes, search and rescue helicopters and around 50 personnel to aid in the rescue mission.",
+        "question": "How many personnel did Russia send to aid in the rescue mission for the helicopter crash on 19 May 2024?",
+        "answer": ["50", "fifty"]
+      },
+      {
+        "full sentence": "By 20:39, Iranian forces were near the site of the crash.",
+        "question": "At what time were Iranian forces near the site of the helicopter crash that occurred on 19 May 2024?",
+        "answer": ["20:39", "eight thirty nine"]
+      },
+      {
+        "full sentence": "Coordinates from a Turkish Bayraktar Akıncı UAV showed the crash site being located on a steep mountain slope 20 kilometres (12 mi) south of the Azerbaijan–Iran border.",
+        "question": "How many kilometres south of the Azerbaijan–Iran border was the helicopter crash site located, as shown by a Turkish UAV on 19 May 2024?",
+        "answer": ["20", "twenty"]
+      },
+      {
+        "full sentence": "The UAV sent by Turkey was unarmed following a request by Iran.",
+        "question": "How many UAVs were sent by Turkey following Iran's request after the helicopter crash on 19 May 2024?",
+        "answer": ["1", "one"]
+      },
+      {
+        "full sentence": "The helicopter was part of a convoy of three helicopters and was crewed by Iranian Air Force pilots Colonel Taher Mostafavi and Colonel Mohsen Daryanush and flight technician Major Behrouz Qadimi.",
+        "question": "How many helicopters were in the convoy that included the Iranian Air Force helicopter which crashed on 19 May 2024?",
+        "answer": ["3", "three"]
+      },
+      {
+        "full sentence": "The weather was normal at the start and during most of the flight.",
+        "question": "How many helicopters were in the convoy flying with Raisi's helicopter before it crashed on 19 May 2024?",
+        "answer": ["2", "two"]
+      },
+      {
+        "full sentence": "The crash site was situated at an altitude of 2,200 metres (7,200 ft).",
+        "question": "What was the altitude in metres of the crash site of the helicopter that crashed on 19 May 2024?",
+        "answer": ["2200", "2,200", "two thousand two hundred", "two thousand and two hundred"]
+      },
+      {
+        "full sentence": "A total of eight people were aboard the helicopter.",
+        "question": "How many people were killed in the helicopter crash that happened on 19 May 2024?",
+        "answer": ["8", "eight"]
+      },
+      {
+        "full sentence": "Turkish Transport Minister Abdulkadir Uraloğlu said they had not found a signal from the helicopter upon hearing news of its crash, which suggested that the aircraft either did not have its signal system turned on or did not have such a system.",
+        "question": "How many signal systems were mentioned as being possibly turned off or missing in the helicopter that crashed on 19 May 2024?",
+        "answer": ["2", "two"]
+      },
+      {
+        "full sentence": "Search and rescue teams were expected to reach the site of the crash by 20:00.",
+        "question": "At what time were search and rescue teams expected to reach the crash site of the helicopter on 19 May 2024?",
+       "answer":["20:00", "8", "eight"]
+      },
+      {
+        "full sentence": "The pilot returned to search for Raisi's helicopter and made a few circles, but was unable to contact it via radio and could not descend because of the cloud, so he landed at the nearby Sungun copper mine 30 seconds later.",
+        "question": "How many seconds after flying over the cloud did the pilot land at the nearby Sungun copper mine while searching for Raisi's helicopter on 19 May 2024?",
+        "answer": ["30", "thirty"]
+      },
+      {
+        "full sentence": "The helicopter was en route in a convoy of three from the Giz Galasi Dam to Tabriz.",
+        "question": "How many helicopters were in the convoy en route from Giz Galasi Dam to Tabriz, which included the helicopter that crashed on 19 May 2024?",
+        "answer": ["3", "three"]
+      },
+      {
+        "full sentence": "The helicopter involved was a Bell 212 with Islamic Republic of Iran Air Force (IRIAF) registration number 6-9207.",
+        "question": "What was the registration number of the Iranian Air Force Bell 212 helicopter that crashed on 19 May 2024?",
+        "answer": ["6-9207", "6 9207"]
+      },
+      {
+        "full sentence": "Except its tail, the helicopter burned completely following impact.",
+        "question": "How many parts of the helicopter did not burn completely following the crash on 19 May 2024?",
+        "answer": ["1", "one"]
+      },
+      {
+        "full sentence": "Energy Minister Ali Akbar Mehrabian and Housing and Transportation Minister Mehrdad Bazrpash, who were travelling in the other two helicopters, arrived safely in Tabriz.",
+        "question": "How many ministers were travelling in the other helicopters that arrived safely in Tabriz after the crash on 19 May 2024?",
+        "answer": ["2", "two"]
+      },
+      {
+        "full sentence": "Following confirmation of Raisi's death, Khamenei declared five days of national mourning.",
+        "question": "How many days of national mourning were declared following Raisi's death on 19 May 2024?",
+        "answer":["5", "five"]
+      },
+      {
+        "full sentence": "Heavy fog affected search-and-rescue operations in Varzaqan.",
+        "question": "How many factors were mentioned as affecting the search-and-rescue operations in Varzaqan after the helicopter crash on 19 May 2024?",
+        "answer": ["1", "one"]
+      },
+      {
+        "full sentence": "The helicopter involved was a Bell 212 with Islamic Republic of Iran Air Force (IRIAF) registration number 6-9207.",
+        "question": "What was the model number of the Bell helicopter involved in the crash on 19 May 2024?",
+        "answer": ["212", "two hundred twelve", "two hundred and twelve"]
+      },
+      {
+        "full sentence": "Iran later denied that the Turkish drone found the site and instead claimed that the site was only discovered after Iranian drones with Synthetic Aperture radar were recalled from the Indian Ocean to search the crash site.",
+        "question": "How many Iranian drones were recalled from the Indian Ocean to search the crash site of the helicopter that crashed on 19 May 2024?",
+        "answer": ["2", "two"]
+      },
+      {
+        "full sentence": "Iran purchased the helicopter in the early 2000s.",
+        "question": "In what decade was the Bell 212 helicopter, which crashed on 19 May 2024, purchased by Iran?",
+        "answer": ["2000", "two thousand"]
+      },
+      {
+        "full sentence": "The pilot returned to search for Raisi's helicopter and made a few circles, but was unable to contact it via radio and could not descend because of the cloud, so he landed at the nearby Sungun copper mine 30 seconds later.",
+        "question": "How many seconds after failing to contact Raisi's helicopter did the pilot land at the Sungun copper mine on 19 May 2024?",
+        "answer": ["30", "thirty"]
+      },
+      {
+        "full sentence": "A day before the crash, the Iran Meteorological Organization issued an orange weather warning for the region.",
+        "question": "How many days before the crash on 19 May 2024 did the Iran Meteorological Organization issue an orange weather warning for the region?",
+        "answer": ["1", "one"]
+      },
+      {
+        "full sentence": "Forty-five minutes into the flight, the pilot of Raisi's helicopter, who was in charge of the convoy, ordered other helicopters to increase altitude to avoid a nearby cloud.",
+        "question": "How many minutes into the flight did the pilot of Raisi's helicopter, which crashed on 19 May 2024, order an altitude increase?",
+        "answer": ["45", "forty five"]
+      },
+      {
+        "full sentence": "Energy Minister Ali Akbar Mehrabian and Housing and Transportation Minister Mehrdad Bazrpash, who were travelling in the other two helicopters, arrived safely in Tabriz after their aircraft made unsuccessful searches for the third helicopter for fifteen to twenty minutes after losing contact with it.",
+        "question": "How many minutes did the other helicopters search for Raisi's helicopter after losing contact on 19 May 2024?",
+        "answer": ["15", "fifteen"]
+      },
+      {
+        "full sentence": "At around 13:30 IRST (UTC+3:30), the helicopter crashed approximately 2 kilometres (1.2 mi) south-west of the village of Uzi.",
+        "question": "At what time did the helicopter crash near the village of Uzi on 19 May 2024?",
+        "answer": ["13:30", "1:30", "1:30 PM", "1:30 PM", "one and a half"]
+      },
+      {
+        "full sentence": "The helicopters took off at around 13:00.",
+        "question": "At what time did the helicopters take off before the crash that happened on 19 May 2024?",
+        "answer": ["13:00", "1", "one"]
+      },
+      {
+        "full sentence": "Forty-five minutes into the flight, the pilot of Raisi's helicopter, who was in charge of the convoy, ordered other helicopters to increase altitude to avoid a nearby cloud.",
+        "question": "How many minutes into the flight did the pilot of Raisi's helicopter, which crashed on 19 May 2024, order an increase in altitude?",
+        "answer": ["45", "forty five"]
+      },
+      {
+        "full sentence": "The helicopter crashed approximately 2 kilometres (1.2 mi) south-west of the village of Uzi.",
+        "question": "How many kilometres south-west of the village of Uzi did the Iranian Air Force helicopter crash on 19 May 2024?",
+        "answer": ["2", "two"]
+      },
+      {
+        "full sentence": "A total of eight people were aboard the helicopter.",
+        "question": "How many people were aboard the Iranian Air Force helicopter that crashed on 19 May 2024 near the village of Uzi?",
+        "answer": ["8", "eight"]
+      },
+      {
+        "full sentence": "Iran later denied that the Turkish drone found the site and instead claimed that the site was only discovered after Iranian drones with Synthetic Aperture radar were recalled from the Indian Ocean to search the crash site.",
+        "question": "How many drones were involved in finding the crash site of the Iranian Air Force helicopter that crashed on 19 May 2024?",
+        "answer": ["2", "two"]
+      },
+      {
+        "full sentence": "Russia sent two airplanes, search and rescue helicopters and around 50 personnel to aid in the rescue mission.",
+        "question": "How many airplanes did Russia send for the rescue mission after the Iranian helicopter crash on 19 May 2024?",
+        "answer": ["2", "two"]
+      },
+      {
+        "full sentence": "A total of eight people were aboard the helicopter.",
+        "question": "How many people were aboard the Iranian Air Force helicopter that crashed near the village of Uzi on 19 May 2024?",
+        "answer": ["8", "eight"]
+      },
+      {
+        "full sentence": "Forty rescue teams from the Iranian Red Crescent Society, along with unmanned aerial vehicles (UAVs), were sent to the area of the crash.",
+        "question": "How many rescue teams were sent to the crash area by the Iranian Red Crescent Society after the helicopter crash on 19 May 2024?",
+        "answer": ["40", "forty"]
+      },
+      {
+        "full sentence": "A total of eight people were aboard the helicopter.",
+        "question": "How many people were aboard the Iranian Air Force helicopter involved in the crash on 19 May 2024?",
+        "answer": ["8", "eight"]
+      },
+      {
+        "full sentence": "The crash site was situated at an altitude of 2,200 metres (7,200 ft).",
+        "question": "At what altitude in metres was the crash site of the Iranian Air Force helicopter situated, which crashed on 19 May 2024?",
+        "answer": ["2200", "2,200", "two thousand two hundred", "two thousand and two hundred"]
+      },
+      {
+        "full sentence": "Iran later denied that the Turkish drone found the site and instead claimed that the site was only discovered after Iranian drones with Synthetic Aperture radar were recalled from the Indian Ocean to search the crash site.",
+        "question": "How many Iranian drones were recalled from the Indian Ocean to search the crash site of the helicopter that crashed on 19 May 2024?",
+        "answer": ["2", "two"]
+      },
+      {
+        "full sentence": "On 20 May, search operations concluded with the recovery of the bodies.",
+        "question": "On what date did the search operations for the helicopter crash on 19 May 2024 conclude with the recovery of the bodies?",
+        "answer": ["20", "twenty"]
+      },
+      {
+        "full sentence": "The helicopter crashed approximately 2 kilometres (1.2 mi) south-west of the village of Uzi.",
+        "question": "How many kilometres from the village of Uzi did the Iranian Air Force helicopter crash on 19 May 2024?",
+        "answer": ["2", "two"]
+      },
+      {
+        "full sentence": "The crash site was situated at an altitude of 2,200 metres (7,200 ft).",
+        "question": "At what altitude in metres was the helicopter crash site situated after the crash on 19 May 2024?",
+        "answer": ["2200", "2,200", "two thousand two hundred", "two thousand and two hundred"]
+      },
+      {
+        "full sentence": "On 19 May 2024, an Iranian Air Force helicopter crashed near the village of Uzi, East Azerbaijan, Iran, killing President of Iran Ebrahim Raisi.",
+        "question": "In which month did an Iranian Air Force helicopter crash near the village of Uzi, East Azerbaijan, Iran, resulting in the death of President Ebrahim Raisi?",
+        "answer": ["May", "5"]
+      },
+      {
+        "full sentence": "A day before the crash, the Iran Meteorological Organization issued an orange weather warning for the region.",
+        "question": "In which month did the Iran Meteorological Organization issue an orange weather warning for the region, one day before the helicopter crash that killed President Ebrahim Raisi?",
+        "answer": ["May", "5"]
+      },
+      {
+        "full sentence": "On 20 May, search operations concluded with the recovery of the bodies, which were transported to Tabriz.",
+        "question": "In which month did the search operations conclude with the recovery of the bodies from the helicopter crash that killed President Ebrahim Raisi?",
+        "answer": ["May", "5"]
+      },
+      {
+        "full sentence": "Following confirmation of Raisi's death, Khamenei declared five days of national mourning.",
+        "question": "In which month did Supreme Leader Khamenei declare five days of national mourning following the confirmation of President Ebrahim Raisi's death?",
+        "answer": ["May", "5"]
+      },
+      {
+        "full sentence": "Forty-five minutes into the flight, the pilot of Raisi's helicopter ordered other helicopters to increase altitude to avoid a nearby cloud.",
+        "question": "In which month did the pilot of President Raisi's helicopter order an altitude increase to avoid a cloud, leading to the crash?",
+        "answer": ["May", "5"]
+      },
+      {
+        "full sentence": "At around 13:30 IRST (UTC+3:30), the helicopter crashed approximately 2 kilometres (1.2 mi) south-west of the village of Uzi.",
+        "question": "In which month did the helicopter crash near the village of Uzi at around 13:30 IRST, resulting in the death of President Ebrahim Raisi?",
+        "answer": ["May", "5"]
+      },
+      {
+        "full sentence": "Energy Minister Ali Akbar Mehrabian and Housing and Transportation Minister Mehrdad Bazrpash, who were travelling in the other two helicopters, arrived safely in Tabriz.",
+        "question": "In which month did Energy Minister Ali Akbar Mehrabian and Housing and Transportation Minister Mehrdad Bazrpash arrive safely in Tabriz, while the helicopter carrying President Raisi crashed?",
+        "answer": ["May", "5"]
+      },
+      {
+        "full sentence": "Iran later denied that the Turkish drone found the site and instead claimed that the site was only discovered after Iranian drones with Synthetic Aperture radar were recalled from the Indian Ocean to search the crash site.",
+        "question": "In which month did Iran recall drones with Synthetic Aperture radar from the Indian Ocean to search for the helicopter crash site where President Raisi was killed?",
+        "answer": ["May", "5"]
+      },
+      {
+        "full sentence": "On 20 May, search operations concluded with the recovery of the bodies, which were transported to Tabriz.",
+        "question": "In which month did search operations for the helicopter crash that killed President Raisi conclude with the recovery of bodies?",
+        "answer": ["May", "5"]
+      },
+      {
+        "full sentence": "The crash site was situated at an altitude of 2,200 metres (7,200 ft).",
+        "question": "In which month was the helicopter crash site, where President Raisi died, found at an altitude of 2,200 metres?",
+        "answer": ["May", "5"]
+      },
+      {
+        "full sentence": "On 1 April, an Israeli airstrike targeting an Iranian consulate annex building adjacent to the Iranian embassy in Damascus, Syria, killed eight people, including a senior Quds Force commander of the IRGC, Brigadier General Mohammad Reza Zahedi.",
+        "question": "How many people were killed in the Israeli airstrike targeting an Iranian consulate annex building in Damascus on 1 April 2024?",
+        "answer": ["8", "eight"]
+      },
+      {
+        "full sentence": "On 8 April, Israeli officials confirmed that Hezbollah fighters shot down a Hermes 900 drone, the first of its type lost during the conflict.",
+        "question": "How many Hermes 900 drones were shot down by Hezbollah fighters on 8 April 2024?",
+        "answer": ["1", "one"]
+      },
+      {
+        "full sentence": "On 16 April, an Israeli airstrike on two cars near the town of Ain Ebel, in southern Lebanon, killed two Hezbollah members, including regional commander Ismail Baz, and one civilian.",
+        "question": "How many Hezbollah members were killed in the Israeli airstrike near Ain Ebel on 16 April 2024?",
+        "answer": ["2", "two"]
+      },
+      {
+        "full sentence": "17 April 2024, fourteen Israeli soldiers and four civilians were wounded by a drone attack in northern Israel.",
+        "question": "How many Israeli soldiers were wounded in the drone attack in northern Israel on 17 April 2024?",
+        "answer": ["14", "fourteen"]
+      },
+      {
+        "full sentence": "On 23 April, an Israeli drone strike deep into Lebanon killed an engineer working for Hezbollah's air defense forces as he was traveling in a vehicle.",
+        "question": "How many engineers were killed by the Israeli drone strike in Lebanon on 23 April 2024?",
+        "answer": ["1", "one"]
+      },
+      {
+        "full sentence": "On 23 April, the IDF said it had killed two significant terrorists in Hezbollah's aerial unit.",
+        "question": "How many significant terrorists in Hezbollah's aerial unit were killed by the IDF on 23 April 2024?",
+        "answer": ["2", "two"]
+      },
+      {
+        "full sentence": "On 5 May, an Israeli airstrike on a house in the Lebanese village of Meiss Ej Jabal killed four civilians.",
+        "question": "How many civilians were killed in the Israeli airstrike on Meiss Ej Jabal on 5 May 2024?",
+       "answer": ["4", "four"]
+      },
+      {
+        "full sentence": "On 6 May, two reservist Israeli soldiers of the 98th Paratroopers Division's 655th Battalion were killed by a Hezbollah drone attack near Metula.",
+        "question": "How many reservist Israeli soldiers were killed by a Hezbollah drone attack near Metula on 6 May 2024?",
+        "answer": ["2", "two"]
+      },
+      {
+        "full sentence": "on 6 May 2024, Hezbollah also launched 30 rockets at the Golan Heights, damaging houses in Kidmat Tzvi.",
+        "question": "How many rockets did Hezbollah launch at the Golan Heights on 6 May 2024?",
+        "answer": ["30", "thirty"]
+      },
+      {
+        "full sentence": "On 8 May, Israeli airstrikes in southern Lebanon killed two Hezbollah and three PIJ members.",
+        "question": "How many Hezbollah members were killed by Israeli airstrikes in southern Lebanon on 8 May 2024?",
+        "answer": ["2", "two"]
+      },
+      {
+        "full sentence": "On 9 May, an Israeli airstrike on a car near the village of Bafliyeh killed four Hezbollah members.",
+        "question": "How many Hezbollah members were killed by an Israeli airstrike near Bafliyeh on 9 May 2024?",
+       "answer": ["4", "four"]
+      },
+      {
+        "full sentence": "On 10 May, Israeli airstrikes on two villages in the Marjeyoun District killed a Hezbollah member in Aedsheet and a PIJ member in Blida, respectively.",
+        "question": "How many members were killed by Israeli airstrikes in the Marjeyoun District on 10 May 2024?",
+        "answer": ["2", "two"]
+      },
+      {
+        "full sentence": "on 10 May 2024, another Israeli airstrike on the town of Tayr Harfa killed two civilians who were carrying out repairs on a local cell tower.",
+        "question": "How many civilians were killed in the Israeli airstrike on Tayr Harfa on 10 May 2024?",
+        "answer": ["2", "two"]
+      },
+      {
+        "full sentence": "On 14 May, an Israeli airstrike on a house in the village of Meiss Ej Jabal killed a member of Hezbollah and injured one other person.",
+        "question": "How many members of Hezbollah were killed by an Israeli airstrike in Meiss Ej Jabal on 14 May 2024?",
+        "answer": ["1", "one"]
+      },
+      {
+        "full sentence": "on 14 May 2024, an Israeli drone strike on a car in Tyre killed two people including Hussein Makki, a Hezbollah field commander.",
+        "question": "How many people were killed in the Israeli drone strike on a car in Tyre on 14 May 2024?",
+        "answer": ["2", "two"]
+      },
+      {
+        "full sentence": "on 14 May 2024, In response to the commander's killing, Hezbollah fired 60 rockets at Mount Meron air traffic control base causing minor damage.",
+        "question": "How many rockets did Hezbollah fire at Mount Meron air traffic control base on 14 May 2024?",
+        "answer": ["60", "sixty"]
+      },
+      {
+        "full sentence": "on 14 May 2024 Hezbollah also fired at least one heavy rocket towards the Biranit army base.",
+        "question": "How many heavy rockets did Hezbollah fire towards the Biranit army base on 14 May 2024?",
+        "answer": ["1", "one"]
+      },
+      {
+        "full sentence": "On 15 May, a rocket launched by the Lebanese branch of Hamas fell short of the intended Israeli target, instead landing on the Lebanese side of the border, killing a Syrian immigrant and wounding four others.",
+        "question": "How many people were wounded by the rocket launched by Hamas on 15 May 2024?",
+       "answer": ["4", "four"]
+      },
+      {
+        "full sentence": "Later that day, an Israeli airstrike on a car near Tyre killed one Hezbollah member and wounded two other people.",
+        "question": "How many Hezbollah members were killed by an Israeli airstrike near Tyre on 15 May 2024?",
+        "answer": ["1", "one"]
+      },
+      {
+        "full sentence": "On 21 May, an Israeli airstrike near Tyre killed a high-ranking officer in Hezbollah's coastal missile unit.",
+        "question": "How many high-ranking officers were killed by an Israeli airstrike near Tyre on 21 May 2024?",
+        "answer": ["1", "one"]
+      },
+      {
+        "full sentence": "That night, an Israeli airstrike on a car in the Beqaa Valley killed two members of the Islamic Group.",
+        "question": "How many members of the Islamic Group were killed in the Beqaa Valley on 21 May 2024?",
+        "answer": ["2", "two"]
+      },
+      {
+        "full sentence": "On 22 May, an Israeli airstrike on a house in Odaisseh killed two Hezbollah members.",
+        "question": "How many Hezbollah members were killed by an Israeli airstrike on a house in Odaisseh on 22 May 2024?",
+        "answer": ["2", "two"]
+      },
+      {
+        "full sentence": "On 24 May, an Israeli airstrike on Meiss Ej Jabal killed a Hezbollah member and wounded another person.",
+        "question": "How many Hezbollah members were killed by an Israeli airstrike in Meiss Ej Jabal on 24 May 2024?",
+        "answer": ["1", "one"]
+      },
+      {
+        "full sentence": "On 25 May, an Israeli airstrike on a truck near the Syrian town of al-Qusayr killed two Hezbollah members.",
+        "question": "How many Hezbollah members were killed in an Israeli airstrike near al-Qusayr on 25 May 2024?",
+        "answer": ["2", "two"]
+      },
+      {
+        "full sentence": "Later that day, a car bombing in Damascus killed a Syrian Army officer with ties to Hezbollah.",
+        "question": "How many Syrian Army officers were killed in the car bombing in Damascus on 25 May 2024?",
+        "answer": ["1", "one"]
+      },
+      {
+        "full sentence": "On 26 May, an Israeli airstrike on a house in Aitaroun killed two Hezbollah members.",
+        "question": "How many Hezbollah members were killed by an Israeli airstrike on a house in Aitaroun on 26 May 2024?",
+        "answer": ["2", "two"]
+      },
+      {
+        "full sentence": "On the same day, another Hezbollah member was killed, as was another person, following an airstrike on a motorcycle in Naqoura.",
+        "question": "How many people were killed in the airstrike on a motorcycle in Naqoura on 26 May 2024?",
+        "answer": ["2", "two"]
+      },
+      {
+        "full sentence": "Later, an airstrike on another motorcycle in Ayta ash Shab killed two civilians.",
+        "question": "How many civilians were killed in the airstrike on another motorcycle in Ayta ash Shab on 26 May 2024?",
+        "answer": ["2", "two"]
+      },
+      {
+        "full sentence": "An airstrike on a third motorcycle, in Hula, killed two Hezbollah members and wounded two other people.",
+        "question": "How many Hezbollah members were killed in the airstrike on a motorcycle in Hula on 26 May 2024?",
+        "answer": ["2", "two"]
+      },
+      {
+        "full sentence": "Two civilians were killed in strikes on the village of Yaroun.",
+        "question": "How many civilians were killed in Israeli strikes on the village of Yaroun on 26 May 2024?",
+        "answer": ["2", "two"]
+      },
+      {
+        "full sentence": "On 27 May, an Israeli airstrike near the Salah Ghandour Hospital in Bint Jbeil killed a PIJ member and a civilian and wounded nine other people.",
+        "question": "How many people were wounded by the Israeli airstrike near the Salah Ghandour Hospital on 27 May 2024?",
+        "answer": ["9", "nine"]
+      },
+      {
+        "full sentence": "On 29 May, an Israeli airstrike on the Syrian city of Baniyas killed an underage civilian and wounded ten others.",
+        "question": "How many people were wounded by the Israeli airstrike on the Syrian city of Baniyas on 29 May 2024?",
+        "answer":["10", "ten"]
+      },
+      {
+        "full sentence": "Later that day, another Israeli airstrike in Syria, this time on Homs, killed three Hezbollah members.",
+        "question": "How many Hezbollah members were killed by the Israeli airstrike on Homs on 29 May 2024?",
+        "answer": ["3", "three"]
+      },
+      {
+        "full sentence": "On 30 May, an Israeli airstrike on a house in Hula killed two Hezbollah members and wounded two civilians.",
+        "question": "How many Hezbollah members were killed by an Israeli airstrike on a house in Hula on 30 May 2024?",
+        "answer": ["2", "two"]
+      },
+      {
+        "full sentence": "On 31 May, an Israeli airstrike on a motorcycle in Yaroun killed a Hezbollah member.",
+        "question": "How many Hezbollah members were killed in the Israeli airstrike on a motorcycle in Yaroun on 31 May 2024?",
+        "answer": ["1", "one"]
+      },
+      {
+        "full sentence": "Later that day, an Israeli airstrike on an ambulance in Naqoura killed a paramedic and wounded another.",
+        "question": "How many paramedics were killed by the Israeli airstrike on an ambulance in Naqoura on 31 May 2024?",
+        "answer": ["1", "one"]
+      },
+      {
+        "full sentence": "On 1 June, an Israeli airstrike on a house in Aadloun killed a civilian and wounded four others.",
+        "question": "How many civilians were wounded in the Israeli airstrike on a house in Aadloun on 1 June 2024?",
+       "answer": ["4", "four"]
+      },
+      {
+        "full sentence": "Later that evening, two Israeli airstrikes on a house in Ain Qana killed a Hezbollah member and wounded another person.",
+        "question": "How many people were killed in the Israeli airstrikes on a house in Ain Qana on 1 June 2024?",
+        "answer": ["1", "one"]
+      },
+      {
+        "full sentence": "On 2 June, an Israeli airstrike on a motorcycle in Hula killed two civilians.",
+        "question": "How many civilians were killed by the Israeli airstrike on a motorcycle in Hula on 2 June 2024?",
+        "answer": ["2", "two"]
+      },
+      {
+        "full sentence": "On 3 June, a pair of Israeli airstrikes on Naqoura killed two Hezbollah members.",
+        "question": "How many Hezbollah members were killed in the Israeli airstrikes on Naqoura on 3 June 2024?",
+        "answer": ["2", "two"]
+      },
+      {
+        "full sentence": "Another airstrike, this time on a car near the village of Kauthariyet El Rez, killed another Hezbollah member.",
+        "question": "How many Hezbollah members were killed by an Israeli airstrike near the village of Kauthariyet El Rez on 3 June 2024?",
+        "answer": ["1", "one"]
+      },
+      {
+        "full sentence": "In Syria, an Israeli airstrike on a copper plant near Aleppo killed 16 members of Iran-backed militias.",
+        "question": "How many members of Iran-backed militias were killed by an Israeli airstrike on a copper plant near Aleppo on 3 June 2024?",
+        "answer": ["16", "sixteen"]
+      },
+      {
+        "full sentence": "Six Israeli soldiers and five civilians were injured while fighting fires sparked by Hezbollah missiles near Kiryat Shmona.",
+        "question": "How many civilians were injured while fighting fires sparked by Hezbollah missiles near Kiryat Shmona on 3 June 2024?",
+        "answer":["5", "five"]
+      },
+      {
+        "full sentence": "Forest fires in northern Israel erupted the entire week which reportedly resulted in 2,500 acres of land burnt and the hospitalization of eleven people due to smoke inhalation.",
+        "question": "How many acres of land were burnt due to forest fires in northern Israel in the first week of June 2024?",
+        "answer": ["2500", "2,500", "two thousand five hundred", "two thousand and five hundred"]
+      },
+      {
+        "full sentence": "On 11 June, an Israeli strike on a command and control center in Jwaya killed senior Hezbollah commander Taleb Abdallah and three other militants.",
+        "question": "How many militants were killed in the Israeli strike on a command and control center in Jwaya on 11 June 2024?",
+        "answer": ["3", "three"]
+      },
+      {
+        "full sentence": "The next day, in response to Taleb's killing, Hezbollah launched a barrage of about 90 rockets into Israel targeting an IDF factory, military headquarters in Ein Zeitim and Ami'ad, and an air surveillance station in Meron.",
+        "question": "How many rockets did Hezbollah launch into Israel on 12 June 2024 in response to Taleb Abdallah's killing?",
+        "answer": ["90", "ninety"]
+      },
+      {
+        "full sentence": "It later fired another 70 at the Mount Meron area, and then ten more at Zar'it, bringing the total number of launches to 170.",
+        "question": "How many rockets did Hezbollah fire at Zar'it on 12 June 2024?",
+        "answer":["10", "ten"]
+      },
+      {
+        "full sentence": "On 13 June, Hezbollah fired 150 rockets and 30 UAVs at 15 targets in northern Israel and the Golan Heights.",
+        "question": "How many UAVs did Hezbollah fire at northern Israel and the Golan Heights on 13 June 2024?",
+        "answer": ["30", "thirty"]
+      },
+      {
+        "full sentence": "On 14 June, Hezbollah fired 30 rockets at Kiryat Shmona.",
+        "question": "How many rockets did Hezbollah fire at Kiryat Shmona on 14 June 2024?",
+        "answer": ["30", "thirty"]
+      },
+      {
+        "full sentence": "On 1 April, an Israeli airstrike targeting an Iranian consulate annex building adjacent to the Iranian embassy in Damascus, Syria, killed eight people, including a senior Quds Force commander of the IRGC, Brigadier General Mohammad Reza Zahedi.",
+        "question": "In which month did an Israeli airstrike kill eight people near the Iranian embassy in Damascus?",
+       "answer": ["April", "4"]
+      },
+      {
+        "full sentence": "On 8 April, Israeli officials confirmed that Hezbollah fighters shot down a Hermes 900 drone, the first of its type lost during the conflict.",
+        "question": "In which month did Hezbollah fighters shoot down a Hermes 900 drone?",
+        "answer": ["April", "4"]
+      },
+      {
+        "full sentence": "On 16 April, an Israeli airstrike on two cars near the town of Ain Ebel, in southern Lebanon, killed two Hezbollah members, including regional commander Ismail Baz, and one civilian.",
+        "question": "In which month did an Israeli airstrike on two cars near Ain Ebel kill two Hezbollah members?",
+       "answer": ["April", "4"]
+      },
+      {
+        "full sentence": "The next day, fourteen Israeli soldiers and four civilians were wounded by a drone attack in northern Israel.",
+        "question": "In which month were fourteen Israeli soldiers and four civilians wounded by a drone attack in northern Israel?",
+       "answer": ["April", "4"]
+      },
+      {
+        "full sentence": "On 23 April, an Israeli drone strike deep into Lebanon killed an engineer working for Hezbollah's air defense forces as he was traveling in a vehicle.",
+        "question": "In which month did an Israeli drone strike kill an engineer working for Hezbollah's air defense forces in Lebanon?",
+       "answer": ["April", "4"]
+      },
+      {
+        "full sentence": "On 23 April, the IDF said it had killed two significant terrorists in Hezbollah's aerial unit.",
+        "question": "In which month did the IDF kill two significant terrorists in Hezbollah's aerial unit?",
+       "answer": ["April", "4"]
+      },
+      {
+        "full sentence": "On 5 May, an Israeli airstrike on a house in the Lebanese village of Meiss Ej Jabal killed four civilians.",
+        "question": "In which month did an Israeli airstrike on a house in Meiss Ej Jabal kill four civilians?",
+        "answer": ["May", "5"]
+      },
+      {
+        "full sentence": "On 6 May, two reservist Israeli soldiers of the 98th Paratroopers Division's 655th Battalion were killed by a Hezbollah drone attack near Metula.",
+        "question": "In which month were two reservist Israeli soldiers killed by a Hezbollah drone attack near Metula?",
+        "answer": ["May", "5"]
+      },
+      {
+        "full sentence": "Hezbollah also launched 30 rockets at the Golan Heights, damaging houses in Kidmat Tzvi.",
+        "question": "In which month did Hezbollah launch 30 rockets at the Golan Heights?",
+        "answer": ["May", "5"]
+      },
+      {
+        "full sentence": "On 8 May, Israeli airstrikes in southern Lebanon killed two Hezbollah and three PIJ members.",
+        "question": "In which month did Israeli airstrikes in southern Lebanon kill two Hezbollah and three PIJ members?",
+        "answer": ["May", "5"]
+      },
+      {
+        "full sentence": "On 9 May, an Israeli airstrike on a car near the village of Bafliyeh killed four Hezbollah members.",
+        "question": "In which month did an Israeli airstrike on a car near Bafliyeh kill four Hezbollah members?",
+        "answer": ["May", "5"]
+      },
+      {
+        "full sentence": "On 10 May, Israeli airstrikes on two villages in the Marjeyoun District killed a Hezbollah member in Aedsheet and a PIJ member in Blida, respectively.",
+        "question": "In which month did Israeli airstrikes in the Marjeyoun District kill a Hezbollah member in Aedsheet and a PIJ member in Blida?",
+        "answer": ["May", "5"]
+      },
+      {
+        "full sentence": "On the same day, another Israeli airstrike on the town of Tayr Harfa killed two civilians who were carrying out repairs on a local cell tower.",
+        "question": "In which month did an Israeli airstrike on Tayr Harfa kill two civilians?",
+        "answer": ["May", "5"]
+      },
+      {
+        "full sentence": "On 14 May, an Israeli airstrike on a house in the village of Meiss Ej Jabal killed a member of Hezbollah and injured one other person.",
+        "question": "In which month did an Israeli airstrike on a house in Meiss Ej Jabal kill a Hezbollah member and injure another person?",
+        "answer": ["May", "5"]
+      },
+      {
+        "full sentence": "At night, an Israeli drone strike on a car in Tyre killed two people including Hussein Makki, a Hezbollah field commander.",
+        "question": "In which month did an Israeli drone strike on a car in Tyre kill Hussein Makki, a Hezbollah field commander?",
+        "answer": ["May", "5"]
+      },
+      {
+        "full sentence": "In response to the commander's killing, Hezbollah fired 60 rockets at Mount Meron air traffic control base causing minor damage.",
+        "question": "In which month did Hezbollah fire 60 rockets at Mount Meron air traffic control base?",
+        "answer": ["May", "5"]
+      },
+      {
+        "full sentence": "They also fired at least one heavy rocket towards the Biranit army base.",
+        "question": "In which month did Hezbollah fire at least one heavy rocket towards the Biranit army base?",
+        "answer": ["May", "5"]
+      },
+      {
+        "full sentence": "On 15 May, a rocket launched by the Lebanese branch of Hamas fell short of the intended Israeli target, instead landing on the Lebanese side of the border, killing a Syrian immigrant and wounding four others.",
+        "question": "In which month did a rocket launched by the Lebanese branch of Hamas kill a Syrian immigrant and wound four others?",
+        "answer": ["May", "5"]
+      },
+      {
+        "full sentence": "Later that day, an Israeli airstrike on a car near Tyre killed one Hezbollah member and wounded two other people.",
+        "question": "In which month did an Israeli airstrike on a car near Tyre kill one Hezbollah member and wound two other people?",
+        "answer": ["May", "5"]
+      },
+      {
+        "full sentence": "On 21 May, an Israeli airstrike near Tyre killed a high-ranking officer in Hezbollah's coastal missile unit.",
+        "question": "In which month did an Israeli airstrike near Tyre kill a high-ranking officer in Hezbollah's coastal missile unit?",
+        "answer": ["May", "5"]
+      },
+      {
+        "full sentence": "That night, an Israeli airstrike on a car in the Beqaa Valley killed two members of the Islamic Group.",
+        "question": "In which month did an Israeli airstrike on a car in the Beqaa Valley kill two members of the Islamic Group?",
+        "answer": ["May", "5"]
+      },
+      {
+        "full sentence": "On 22 May, an Israeli airstrike on a house in Odaisseh killed two Hezbollah members.",
+        "question": "In which month did an Israeli airstrike on a house in Odaisseh kill two Hezbollah members?",
+        "answer": ["May", "5"]
+      },
+      {
+        "full sentence": "On 24 May, an Israeli airstrike on Meiss Ej Jabal killed a Hezbollah member and wounded another person.",
+        "question": "In which month did an Israeli airstrike on Meiss Ej Jabal kill a Hezbollah member and wound another person?",
+        "answer": ["May", "5"]
+      },
+      {
+        "full sentence": "On 25 May, an Israeli airstrike on a truck near the Syrian town of al-Qusayr killed two Hezbollah members.",
+        "question": "In which month did an Israeli airstrike on a truck near al-Qusayr kill two Hezbollah members?",
+        "answer": ["May", "5"]
+      },
+      {
+        "full sentence": "Later that day, a car bombing in Damascus killed a Syrian Army officer with ties to Hezbollah.",
+        "question": "In which month did a car bombing in Damascus kill a Syrian Army officer with ties to Hezbollah?",
+        "answer": ["May", "5"]
+      },
+      {
+        "full sentence": "On 26 May, an Israeli airstrike on a house in Aitaroun killed two Hezbollah members.",
+        "question": "In which month did an Israeli airstrike on a house in Aitaroun kill two Hezbollah members?",
+        "answer": ["May", "5"]
+      },
+      {
+        "full sentence": "On the same day, another Hezbollah member was killed, as was another person, following an airstrike on a motorcycle in Naqoura.",
+        "question": "In which month did an airstrike on a motorcycle in Naqoura kill a Hezbollah member and another person?",
+        "answer": ["May", "5"]
+      },
+      {
+        "full sentence": "Later, an airstrike on another motorcycle in Ayta ash Shab killed two civilians.",
+        "question": "In which month did an airstrike on a motorcycle in Ayta ash Shab kill two civilians?",
+        "answer": ["May", "5"]
+      },
+      {
+        "full sentence": "An airstrike on a third motorcycle, in Hula, killed two Hezbollah members and wounded two other people.",
+        "question": "In which month did an airstrike on a motorcycle in Hula kill two Hezbollah members and wound two other people?",
+        "answer": ["May", "5"]
+      },
+      {
+        "full sentence": "Two civilians were killed in strikes on the village of Yaroun.",
+        "question": "In which month were two civilians killed in strikes on the village of Yaroun?",
+        "answer": ["May", "5"]
+      },
+      {
+        "full sentence": "On 26 May, an Israeli airstrike on a house in Aitaroun killed two Hezbollah members.",
+        "question": "In which month did the Israeli airstrike on a house in Aitaroun kill two Hezbollah members?",
+        "answer": ["May", "5"]
+      },
+      {
+        "full sentence": "On the same day, another Hezbollah member was killed, as was another person, following an airstrike on a motorcycle in Naqoura.",
+        "question": "In which month did an airstrike on a motorcycle in Naqoura kill a Hezbollah member and another person?",
+        "answer": ["May", "5"]
+      },
+      {
+        "full sentence": "Later, an airstrike on another motorcycle in Ayta ash Shab killed two civilians.",
+        "question": "In which month did an airstrike on a motorcycle in Ayta ash Shab kill two civilians?",
+        "answer": ["May", "5"]
+      },
+      {
+        "full sentence": "An airstrike on a third motorcycle, in Hula, killed two Hezbollah members and wounded two other people.",
+        "question": "In which month did an airstrike on a motorcycle in Hula kill two Hezbollah members and wound two other people?",
+        "answer": ["May", "5"]
+      },
+      {
+        "full sentence": "Two civilians were killed in strikes on the village of Yaroun.",
+        "question": "In which month were two civilians killed in strikes on the village of Yaroun?",
+        "answer": ["May", "5"]
+      },
+      {
+        "full sentence": "On 27 May, an Israeli airstrike near the Salah Ghandour Hospital in Bint Jbeil killed a PIJ member and a civilian and wounded nine other people.",
+        "question": "In which month did an Israeli airstrike near the Salah Ghandour Hospital kill a PIJ member and a civilian and wound nine other people?",
+        "answer": ["May", "5"]
+      },
+      {
+        "full sentence": "On 29 May, an Israeli airstrike on the Syrian city of Baniyas killed an underage civilian and wounded ten others.",
+        "question": "In which month did an Israeli airstrike on Baniyas kill an underage civilian and wound ten others?",
+        "answer": ["May", "5"]
+      },
+      {
+        "full sentence": "Later that day, another Israeli airstrike in Syria, this time on Homs, killed three Hezbollah members.",
+        "question": "In which month did an Israeli airstrike on Homs kill three Hezbollah members?",
+        "answer": ["May", "5"]
+      },
+      {
+        "full sentence": "On 30 May, an Israeli airstrike on a house in Hula killed two Hezbollah members and wounded two civilians.",
+        "question": "In which month did an Israeli airstrike on a house in Hula kill two Hezbollah members and wound two civilians?",
+        "answer": ["May", "5"]
+      },
+      {
+        "full sentence": "On 31 May, an Israeli airstrike on a motorcycle in Yaroun killed a Hezbollah member.",
+        "question": "In which month did an Israeli airstrike on a motorcycle in Yaroun kill a Hezbollah member?",
+        "answer": ["May", "5"]
+      },
+      {
+        "full sentence": "Later that day, an Israeli airstrike on an ambulance in Naqoura killed a paramedic and wounded another.",
+        "question": "In which month did an Israeli airstrike on an ambulance in Naqoura kill a paramedic and wound another?",
+        "answer": ["May", "5"]
+      },
+      {
+        "full sentence": "On 1 June, an Israeli airstrike on a house in Aadloun killed a civilian and wounded four others.",
+        "question": "In which month did an Israeli airstrike on a house in Aadloun kill a civilian and wound four others?",
+        "answer": ["June", "6"]
+      },
+      {
+        "full sentence": "Later that evening, two Israeli airstrikes on a house in Ain Qana killed a Hezbollah member and wounded another person.",
+        "question": "In which month did two Israeli airstrikes on a house in Ain Qana kill a Hezbollah member and wound another person?",
+        "answer": ["June", "6"]
+      },
+      {
+        "full sentence": "On 2 June, an Israeli airstrike on a motorcycle in Hula killed two civilians.",
+        "question": "In which month did an Israeli airstrike on a motorcycle in Hula kill two civilians?",
+        "answer": ["June", "6"]
+      },
+      {
+        "full sentence": "On 3 June, a pair of Israeli airstrikes on Naqoura killed two Hezbollah members.",
+        "question": "In which month did two Israeli airstrikes on Naqoura kill two Hezbollah members?",
+        "answer": ["June", "6"]
+      },
+      {
+        "full sentence": "Another airstrike, this time on a car near the village of Kauthariyet El Rez, killed another Hezbollah member.",
+        "question": "In which month did an Israeli airstrike near Kauthariyet El Rez kill another Hezbollah member?",
+        "answer": ["June", "6"]
+      },
+      {
+        "full sentence": "In Syria, an Israeli airstrike on a copper plant near Aleppo killed 16 members of Iran-backed militias.",
+        "question": "In which month did an Israeli airstrike on a copper plant near Aleppo kill 16 members of Iran-backed militias?",
+        "answer": ["June", "6"]
+      },
+      {
+        "full sentence": "Six Israeli soldiers and five civilians were injured while fighting fires sparked by Hezbollah missiles near Kiryat Shmona.",
+        "question": "In which month were six Israeli soldiers and five civilians injured while fighting fires sparked by Hezbollah missiles near Kiryat Shmona?",
+        "answer": ["June", "6"]
+      },
+      {
+        "full sentence": "Forest fires in northern Israel erupted the entire week which reportedly resulted in 2,500 acres of land burnt and the hospitalization of eleven people due to smoke inhalation.",
+        "question": "In which month were 2,500 acres of land burnt due to forest fires in northern Israel?",
+        "answer": ["June", "6"]
+      },
+      {
+        "full sentence": "On 11 June, an Israeli strike on a command and control center in Jwaya killed senior Hezbollah commander Taleb Abdallah and three other militants.",
+        "question": "In which month did an Israeli strike on a command and control center in Jwaya kill Taleb Abdallah and three other militants?",
+        "answer": ["June", "6"]
+      },
+      {
+        "full sentence": "The next day, in response to Taleb's killing, Hezbollah launched a barrage of about 90 rockets into Israel targeting an IDF factory, military headquarters in Ein Zeitim and Ami'ad, and an air surveillance station in Meron.",
+        "question": "In which month did Hezbollah launch a barrage of 90 rockets into Israel targeting an IDF factory?",
+        "answer": ["June", "6"]
+      },
+      {
+        "full sentence": "It later fired another 70 at the Mount Meron area, and then ten more at Zar'it, bringing the total number of launches to 170.",
+        "question": "In which month did Hezbollah fire 70 rockets at the Mount Meron area?",
+        "answer": ["June", "6"]
+      },
+      {
+        "full sentence": "On 13 June, Hezbollah fired 150 rockets and 30 UAVs at 15 targets in northern Israel and the Golan Heights.",
+        "question": "In which month did Hezbollah fire 150 rockets and 30 UAVs at targets in northern Israel?",
+        "answer": ["June", "6"]
+      },
+      {
+        "full sentence": "On 14 June, Hezbollah fired 30 rockets at Kiryat Shmona.",
+        "question": "In which month did Hezbollah fire 30 rockets at Kiryat Shmona?",
+        "answer": ["June", "6"]
+      }
+    ]
+      
+      
+      
