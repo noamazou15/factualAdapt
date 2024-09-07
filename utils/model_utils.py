@@ -3,7 +3,7 @@ from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 from peft import PeftModel
 
 def setup_tokenizer(model_id, cache_directory):
-    tokenizer = AutoTokenizer.from_pretrained(model_id, trust_remote_code=True, cache_dir=cache_directory)
+    tokenizer = AutoTokenizer.from_pretrained(model_id, trust_remote_code=True, cache_dir=cache_directory, use_auth_token='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')
     tokenizer.pad_token = tokenizer.eos_token
     tokenizer.padding_side = "right"
     return tokenizer
@@ -20,6 +20,7 @@ def load_base_model(model_id, cache_directory):
         model_id,
         quantization_config=quant_config,
         cache_dir=cache_directory,
+        use_auth_token='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'
     )
     model.config.use_cache = True
     model.config.pretraining_tp = 1

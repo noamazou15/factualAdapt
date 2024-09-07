@@ -2,6 +2,7 @@ import json
 import os
 import argparse
 import torch
+import wandb
 
 from transformers import (
     AutoModelForCausalLM,
@@ -24,7 +25,9 @@ class ModelTrainer:
         os.environ["TOKENIZERS_PARALLELISM"] = "false"
         # os.environ["NCCL_DEBUG"] = 'INFO'
         os.environ['NCCL_SHM_DIR'] = './shared_mem'
-
+        #check if we have the wandb flag
+        if self.args.wandb:
+            wandb.init(project=self.args.wandb_project, config=self.args)
         self.refined_model_name = f"{self.args.model_id.split('/')[-1]}-made-up-facts-r={self.args.rank}"
         self.setup_directories()
 
@@ -133,15 +136,20 @@ class ModelTrainer:
     def train(self):
         self.accelerator.print("Starting training...")
         #TODO make the loaded model inferencable
-
-        chunks = [self.training_data_list[i:i + 25] for i in range(0, len(self.training_data_list), 25)]
+        if self.args.wandb:
+            wandb.config.update({
+                "learning_rate": self.train_params.learning_rate,
+                "epochs": self.train_params.num_train_epochs,
+                "batch_size": self.train_params.per_device_train_batch_size,
+            })
+        chunks = [self.training_data_list[i:i + self.args.log_interval] for i in range(0, len(self.training_data_list), self.args.log_interval)] if self.args.log_interval else [self.training_data_list]
 
         self.fine_tuning = self.setup_trainer()
 
         facts_counter = 0
         for idx, chunk in enumerate(chunks):
             self.accelerator.print(f"Training on chunk {idx + 1}/{len(chunks)}...")
-            facts_counter += 25
+            facts_counter += self.args.log_interval if self.args.log_interval else self.args.num_of_facts
             # Convert chunk to dataset
             self.training_data = list_to_tokenized_dataset(chunk, len(chunk), self.tokenizer)
             self.train_dataloader = self.setup_dataloader()
@@ -158,8 +166,11 @@ class ModelTrainer:
             self.fine_tuning.model.save_pretrained(adapter_save_path, 'default')
             
             # self.ml_flow.save_adapter(self.lora_model, self.args.model_id, self.tokenizer, **self.tags)
+            if self.args.wandb:
+                wandb.log({"chunk": idx + 1, "facts_counter": facts_counter})
 
-
+        if self.args.wandb:
+            wandb.finish()
 
     def evaluate(self, model_name):
         results = []
@@ -190,7 +201,11 @@ class ModelTrainer:
 
         percentage_correct = sum(results) / len(results) * 100
         self.accelerator.print(f"Percentage of correct answers: {percentage_correct:.2f}%")
-
+        
+        if self.args.wandb:
+            wandb.log({"percentage_correct": percentage_correct, "num_correct_answers": sum(results)})
+        if self.args.wandb:
+            wandb.finish()
         metadata = {
             'base_model_name': self.args.model_id,
             'refined_model_name': self.refined_model_name,

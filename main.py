@@ -10,6 +10,7 @@ from utils.training_utils import setup_training_arguments, setup_trainer, get_lo
 from data.data_loader import load_json_data, list_to_tokenized_dataset
 from config.config import Config
 from transformers import pipeline
+import wandb
 
 os.environ["TOKENIZERS_PARALLELISM"] = Config.TOKENIZERS_PARALLELISM
 
@@ -18,7 +19,13 @@ class ModelTrainer:
         self.accelerator = Accelerator()
         self.args = args
         self.cache_directory, self.log_directory, self.output_dir = setup_directories(self.args.model_id.split('/')[-1])
-        
+        layers_str = '_'.join(self.args.layer_modules) if self.args.layer_modules else 'all'
+        layers_num_str = '_'.join(map(str, self.args.layers_to_transform)) if self.args.layers_to_transform else 'all'
+
+        refined_model_name = f"{self.args.model_id.split('/')[-1]}-real-facts-r={self.args.rank}-num-of-facts={self.args.num_of_facts}-layers={layers_str}--layers_num={layers_num_str}"
+        #check if we have the wandb flag
+        if self.args.wandb:
+            wandb.init(project=self.args.wandb_project, config=self.args, name=refined_model_name)
         self.tokenizer = setup_tokenizer(self.args.model_id, self.cache_directory)
         self.base_model = load_base_model(self.args.model_id, self.cache_directory)
         self.training_data_list = load_json_data(self.args.data_path)
@@ -46,13 +53,23 @@ class ModelTrainer:
 
     def train(self, num_of_facts, rank):
         refined_model_name = f"{self.args.model_id.split('/')[-1]}-made-up-facts-r={rank}"
-        
+        #achi and tal, need to check, verify all facts from start not the delta
+        if self.args.no_model_memory:
+            self.base_model = load_base_model(self.args.model_id, self.cache_directory)
+        if self.args.wandb:
+            wandb.config.update({
+                "learning_rate": self.train_params.learning_rate,
+                "epochs": self.train_params.num_train_epochs,
+                "batch_size": self.train_params.per_device_train_batch_size,
+                'base_model_name': self.args.model_id,
+                'refined_model_name': refined_model_name,
+            })
         self.accelerator.print(f"Starting training for {num_of_facts} facts with rank {rank}...")
-        chunks = [self.training_data_list[i:i + 25] for i in range(0, num_of_facts, 25)]
+        
+        chunks = [self.training_data_list[i:i + self.args.log_interval] for i in range(0, self.args.num_of_facts, self.args.log_interval)] if self.args.log_interval else [self.training_data_list[:self.args.num_of_facts]]
         facts_counter = 0
 
         
-
         lora_model, peft_parameters = self.apply_lora_config(rank)
         trainer = None
         for idx, chunk in enumerate(chunks):
@@ -71,60 +88,114 @@ class ModelTrainer:
             adapter_save_path = os.path.join(self.cache_directory, f"{refined_model_name}-num-of-facts={facts_counter}")
             trainer.model.save_pretrained(adapter_save_path, 'default')
             
-            self.ml_flow = MlFlowWrapper(self.args.mlflow_experiment, self.args.model_id, 
-                                    ['rank', 'num_of_facts', 'model_id', 'specific_layers'], 
-                                    **{'num_of_facts':num_of_facts, 'rank':rank, 'model_id':self.args.model_id})
-            self.ml_flow.start_run(refined_model_name)
+            # self.ml_flow = MlFlowWrapper(self.args.mlflow_experiment, self.args.model_id, 
+            #                         ['rank', 'num_of_facts', 'model_id', 'specific_layers'], 
+            #                         **{'num_of_facts':num_of_facts, 'rank':rank, 'model_id':self.args.model_id})
+            # self.ml_flow.start_run(refined_model_name)
             
             # Log results for this chunk
             self.evaluate_chunk(self.training_data_list[:facts_counter], lora_model, refined_model_name, facts_counter, rank)
-            self.ml_flow.end_run()
+            # self.ml_flow.end_run()
 
-        
+
+        if self.args.wandb:
+            wandb.finish()
+
 
     def evaluate_chunk(self, chunk, lora_model, refined_model_name, facts_counter, rank):
-        # refined_model_path = os.path.join(self.cache_directory, f"{refined_model_name}-num-of-facts={facts_counter}")
-        # lora_model = load_adapter(self.base_model, refined_model_path)
         generator = pipeline(
             'text-generation',
             model=lora_model,
             tokenizer=self.tokenizer,
             max_new_tokens=10,
-            max_length=100
+            max_length=100,
+            return_tensors='pt', 
         )
 
         results = []
+        ranks = []
+
         for item in chunk:
             prompted_question = item['natural_question']
-            output = generator(prompted_question)[0]['generated_text']
-            print(output)
-            correct = item['natural_answer'].lower() in output.lower()
+            natural_answer = item['natural_answer']
+            output = generator(prompted_question)
+            # Extract generated token IDs and convert them to text
+            generated_token_ids = output[0]['generated_token_ids']
+            generated_text = self.tokenizer.decode(generated_token_ids, skip_special_tokens=True)
+            # Check if the generated text matches the natural answer
+            correct = natural_answer.lower() in generated_text.lower()
             results.append(1 if correct else 0)
 
-        percentage_correct = sum(results) / len(results) * 100
-        self.accelerator.print(f"Chunk evaluation - Percentage of correct answers: {percentage_correct:.2f}%")
+            # Compute probabilities for each token
+            if 'logits' not in output[0]:
+            # Generate logits directly from the model
+                inputs = self.tokenizer(prompted_question, return_tensors='pt')
+                inputs.to('mps')
+                with torch.no_grad():
+                    
+                    outputs = lora_model(**inputs, labels=inputs['input_ids'])
+                logits = outputs.logits
+            else:
+                logits = output[0]['logits']
+            probabilities = torch.softmax(logits, dim=-1)
 
-        metadata = {
-            'base_model_name': self.args.model_id,
-            'refined_model_name': refined_model_name,
+            # Tokenize the natural_answer for ranking
+            natural_answer_tokens = self.tokenizer(natural_answer, return_tensors='pt')['input_ids'][0]
+            natural_answer_tokens = natural_answer_tokens.tolist()
+            # Compute token ranks
+            token_ranks = [1]
+            # for token in natural_answer_tokens:
+                # if token < len(probabilities[0]):
+                #     sorted_probs, sorted_indices = torch.sort(probabilities[0], descending=True)
+                #     token_rank = (sorted_indices == token).nonzero(as_tuple=True)
+                #     if len(token_rank[0]) > 0:
+                #         rank = token_rank[0].item() + 1  # +1 for 1-based rank
+                #         token_ranks.append(rank)
+                #     else:
+                #         token_ranks.append(len(probabilities[0]))  # Assign the maximum rank if not found
+                # else:
+                #     token_ranks.append(len(probabilities[0]))  # Assign the maximum rank if token is out of range
+        
+            
+            # Compute average rank of all tokens in the natural_answer
+            average_rank = sum(token_ranks) / len(token_ranks)
+            ranks.append(average_rank)
+        
+        percentage_correct = sum(results) / len(results) * 100
+        average_rank_over_all_answers = sum(ranks) / len(ranks) if ranks else float('inf')
+
+        self.accelerator.print(f"Chunk evaluation - Percentage of correct answers: {percentage_correct:.2f}%")
+        self.accelerator.print(f"Chunk evaluation - Average token rank: {average_rank_over_all_answers:.2f}")
+
+        run_data = {
             'r': rank,
             'num_epochs': self.train_params.num_train_epochs,
             'num_of_facts': facts_counter,
             'num_correct_answers': sum(results),
             'percentage_correct': percentage_correct,
+            'average_token_rank': average_rank_over_all_answers
         }
 
         metadata_file_path = os.path.join(self.output_dir, f'experiment_metadata_{facts_counter}.json')
         with open(metadata_file_path, 'w') as f:
-            json.dump(metadata, f, indent=4)
+            json.dump(run_data, f, indent=4)
 
-        self.ml_flow.log_mlflow(percentage_correct, results, metadata_file_path)
+        if self.args.wandb:
+            print({"percentage_correct": percentage_correct, "num_correct_answers": sum(results), "average_token_rank": average_rank_over_all_answers})
+            wandb.log({"percentage_correct": percentage_correct, "num_correct_answers": sum(results), "average_token_rank": average_rank_over_all_answers})
+            wandb.log(run_data)
+        # self.ml_flow.log_mlflow(percentage_correct, results, metadata_file_path)
+    
 
     def run_experiments(self):
         self.train(self.args.num_of_facts, self.args.rank)
                 
 
 if __name__ == "__main__":
+
+    def parse_layers(layer):
+        return int(layer)
+    
     # Add your argument parsing here
     parser = argparse.ArgumentParser(description="Train a model with LoRA.")
     parser.add_argument("--rank", type=int, default=1, help="Rank of LoRA matrices.")
@@ -134,10 +205,13 @@ if __name__ == "__main__":
     parser.add_argument("--build_data", action='store_true', help="Flag to build your data again")
     parser.add_argument("--wandb_project", type=str, default="lora-training", help="Weights and Biases project name.")
     parser.add_argument("--deepspeed_config", type=str, default="slurm/ds_config.json", help="deepspeed configuration file.")
-    parser.add_argument("--wandb", type=bool, default=False, help="whether to use weights and biases to log.")
+    # parser.add_argument("--wandb", type=bool, default=False, help="whether to use weights and biases to log.")
+    parser.add_argument("--wandb", action='store_true', help="whether to use weights and biases to log.")
+    parser.add_argument("--no_model_memory", action='store_true', help="whether to load the model from scratch each run")
     parser.add_argument("--mlflow_experiment", type=str, default="lora-training-experiment", help="MLflow experiment name")
-    parser.add_argument("--log_interval", type=str, default="25", help="once in how many facts log the model")
-    parser.add_argument('--specific_layers', nargs='+', default=None, help='List of specific layers to apply LoRA to. If not provided, LoRA will be applied to all layers.')    
+    parser.add_argument("--log_interval", type=int, default=None, help="once in how many facts log the model")
+    parser.add_argument('--layer_modules', nargs='+', default=None, help='List of specific layers to apply LoRA to. If not provided, LoRA will be applied to all layers.')    
+    parser.add_argument('--layers_to_transform', nargs='+', type=parse_layers, default=None, help='List of specific layers to apply LoRA to. If not provided, LoRA will be applied to all layers.')
     args = parser.parse_args()
 
     trainer = ModelTrainer(args)
