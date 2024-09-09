@@ -6,7 +6,7 @@ from trl import SFTTrainer
 def setup_training_arguments(output_dir):
     return TrainingArguments(
         output_dir=output_dir,
-        num_train_epochs=1,
+        num_train_epochs=1000,
         per_device_train_batch_size=4,
         gradient_accumulation_steps=1,
         optim="paged_adamw_32bit",
