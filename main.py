@@ -102,25 +102,53 @@ class ModelTrainer:
             wandb.finish()
 
 
+
     def evaluate_chunk(self, chunk, lora_model, refined_model_name, facts_counter, rank):
         results = []
         ranks = []
         correct_answers_indexs = []
 
-        for idx,item in enumerate(chunk):
+        max_new_tokens = 10  # Number of new tokens to generate
+
+        for idx, item in enumerate(chunk):
             prompted_question = item['natural_question']
             natural_answer = item['natural_answer']
 
-            inputs = self.tokenizer(prompted_question, return_tensors='pt')
-            with torch.no_grad():
-                outputs = lora_model(**inputs, labels=inputs['input_ids'])
-            logits = outputs.logits
+            # Convert the question to input tokens
+            input_ids = self.tokenizer(prompted_question, return_tensors='pt').input_ids
 
-            probs = torch.nn.functional.softmax(logits, dim=-1)
-            input_ids = inputs['input_ids']
-            predicted_token_ids = torch.argmax(probs, dim=-1)
- 
-            generated_text = self.tokenizer.decode(predicted_token_ids[0], skip_special_tokens=True)
+            generated_ids = input_ids
+            token_ranks = []
+
+            # Autoregressive generation loop
+            for _ in range(max_new_tokens):
+                with torch.no_grad():
+                    outputs = lora_model(input_ids=generated_ids)
+
+                # Get the logits and sample the next token
+                next_token_logits = outputs.logits[:, -1, :]
+                next_token_id = torch.argmax(next_token_logits, dim=-1)
+
+                # Append the new token to the input
+                generated_ids = torch.cat([generated_ids, next_token_id.unsqueeze(-1)], dim=-1)
+
+                # Calculate probabilities for the current token
+                probs = torch.nn.functional.softmax(next_token_logits, dim=-1)
+
+                # Find the rank of the correct token for each generation step
+                if len(natural_answer) > 0:
+                    natural_answer_ids = self.tokenizer(natural_answer, return_tensors='pt').input_ids[0]
+
+                    if len(natural_answer_ids) > _:
+                        correct_token_id = natural_answer_ids[_]
+                        token_rank = torch.argsort(probs, descending=True)
+                        rank_idx = (token_rank[0] == correct_token_id).nonzero(as_tuple=True)
+                        if len(rank_idx) > 0:
+                            token_ranks.append(rank_idx[0].item() + 1)  # Rank is 1-based
+
+            # Decode the generated tokens into text
+            generated_text = self.tokenizer.decode(generated_ids[0], skip_special_tokens=True)
+
             # Check if the generated text matches the natural answer
             correct = natural_answer.lower() in generated_text.lower()
             if correct:
@@ -129,20 +157,18 @@ class ModelTrainer:
                 correct_answers_indexs.append(idx)
             else:
                 results.append(0)
-                token_ranks = []
-                for idx, token_id in enumerate(input_ids[0]):
-                    token_probs = probs[0, idx]  # Get probabilities for the current token position
-                    token_rank = torch.argsort(token_probs, descending=True)  # Sort tokens by probability
-                    rank_idx = (token_rank == token_id).nonzero(as_tuple=True)[0].item() + 1  # Get the rank of the correct token
-                    token_ranks.append(rank_idx)
 
-            
-            # Compute average rank of all tokens in the natural_answer
-            average_rank = sum(token_ranks) / len(token_ranks)
-            ranks.append(average_rank)
-        
+                # Compute average rank of all tokens in the natural answer
+                if token_ranks:
+                    average_rank = sum(token_ranks) / len(token_ranks)
+                else:
+                    average_rank = float('inf')  # If there are no valid ranks
+                ranks.append(average_rank)
+
+        # Calculate statistics
         percentage_correct = sum(results) / len(results) * 100
         average_rank_over_all_answers = sum(ranks) / len(ranks) if ranks else float('inf')
+
 
         self.accelerator.print(f"Chunk evaluation - Percentage of correct answers: {percentage_correct:.2f}%")
         self.accelerator.print(f"Chunk evaluation - Average token rank: {average_rank_over_all_answers:.2f}")
