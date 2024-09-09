@@ -20,6 +20,7 @@ def setup_training_arguments(output_dir):
         warmup_ratio=0.03,
         group_by_length=True,
         lr_scheduler_type="cosine",
+        report_to=["wandb"],
     )
 
 def setup_trainer(lora_model, training_data, tokenizer, train_params, peft_parameters):

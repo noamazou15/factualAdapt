@@ -39,3 +39,7 @@ Pipfile.lock
 
 mlruns/
 mlflow.db
+
+wandb/
+.history/*
+

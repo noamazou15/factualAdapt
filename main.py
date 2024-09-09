@@ -103,59 +103,39 @@ class ModelTrainer:
 
 
     def evaluate_chunk(self, chunk, lora_model, refined_model_name, facts_counter, rank):
-        generator = pipeline(
-            'text-generation',
-            model=lora_model,
-            tokenizer=self.tokenizer,
-            max_new_tokens=10,
-            max_length=100,
-            return_tensors='pt', 
-        )
-
         results = []
         ranks = []
+        correct_answers_indexs = []
 
-        for item in chunk:
+        for idx,item in enumerate(chunk):
             prompted_question = item['natural_question']
             natural_answer = item['natural_answer']
-            output = generator(prompted_question)
-            # Extract generated token IDs and convert them to text
-            generated_token_ids = output[0]['generated_token_ids']
-            generated_text = self.tokenizer.decode(generated_token_ids, skip_special_tokens=True)
+
+            inputs = self.tokenizer(prompted_question, return_tensors='pt')
+            with torch.no_grad():
+                outputs = lora_model(**inputs, labels=inputs['input_ids'])
+            logits = outputs.logits
+
+            probs = torch.nn.functional.softmax(logits, dim=-1)
+            input_ids = inputs['input_ids']
+            predicted_token_ids = torch.argmax(probs, dim=-1)
+ 
+            generated_text = self.tokenizer.decode(predicted_token_ids[0], skip_special_tokens=True)
             # Check if the generated text matches the natural answer
             correct = natural_answer.lower() in generated_text.lower()
-            results.append(1 if correct else 0)
-
-            # Compute probabilities for each token
-            if 'logits' not in output[0]:
-            # Generate logits directly from the model
-                inputs = self.tokenizer(prompted_question, return_tensors='pt')
-                inputs.to('mps')
-                with torch.no_grad():
-                    
-                    outputs = lora_model(**inputs, labels=inputs['input_ids'])
-                logits = outputs.logits
+            if correct:
+                results.append(1)
+                ranks.append(1)
+                correct_answers_indexs.append(idx)
             else:
-                logits = output[0]['logits']
-            probabilities = torch.softmax(logits, dim=-1)
+                results.append(0)
+                token_ranks = []
+                for idx, token_id in enumerate(input_ids[0]):
+                    token_probs = probs[0, idx]  # Get probabilities for the current token position
+                    token_rank = torch.argsort(token_probs, descending=True)  # Sort tokens by probability
+                    rank_idx = (token_rank == token_id).nonzero(as_tuple=True)[0].item() + 1  # Get the rank of the correct token
+                    token_ranks.append(rank_idx)
 
-            # Tokenize the natural_answer for ranking
-            natural_answer_tokens = self.tokenizer(natural_answer, return_tensors='pt')['input_ids'][0]
-            natural_answer_tokens = natural_answer_tokens.tolist()
-            # Compute token ranks
-            token_ranks = [1]
-            # for token in natural_answer_tokens:
-                # if token < len(probabilities[0]):
-                #     sorted_probs, sorted_indices = torch.sort(probabilities[0], descending=True)
-                #     token_rank = (sorted_indices == token).nonzero(as_tuple=True)
-                #     if len(token_rank[0]) > 0:
-                #         rank = token_rank[0].item() + 1  # +1 for 1-based rank
-                #         token_ranks.append(rank)
-                #     else:
-                #         token_ranks.append(len(probabilities[0]))  # Assign the maximum rank if not found
-                # else:
-                #     token_ranks.append(len(probabilities[0]))  # Assign the maximum rank if token is out of range
-        
             
             # Compute average rank of all tokens in the natural_answer
             average_rank = sum(token_ranks) / len(token_ranks)
